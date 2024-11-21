@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux';
 
 
 function App() {
-  const title = useSelector((state) => state.blog.title)
+  let authState = useSelector((state) => state.authState)
+  const blogState = useSelector((state) => state.blogState)
+  console.log(authState, blogState)
   return (
     <>
-      store title : {title}
+      store title : {`${blogState.title}`}
     </>
   )
 }

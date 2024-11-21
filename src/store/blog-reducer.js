@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
   title: 'initial My Title',
   description: "initial description",
-  img: ""
+  imgId: ""
 }
-const blog = createSlice({
-  name: "blog",
+const blogSlice = createSlice({
+  name: "blogSlice",
   initialState: initialState,
   reducers: {
     first: (state, action) => {
@@ -15,5 +14,5 @@ const blog = createSlice({
     }
   }
 })
-export const { first } = blog.actions
-export default blog.reducer;
+export const { first } = blogSlice.actions
+export default blogSlice.reducer;
