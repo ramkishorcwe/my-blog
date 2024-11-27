@@ -2,7 +2,7 @@ const Button = (props) => {
 
   return (
     <>
-      <button {...props}>{props.label}</button>
+      <button {...props}>{props.children ?? props.label ?? "Button"}</button>
     </>
   );
 };

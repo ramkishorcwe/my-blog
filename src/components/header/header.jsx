@@ -1,8 +1,9 @@
 
 import React from 'react';
 import Logo from '../utils/logo';
+import { Button } from '../index'
 
-const Header = () => {
+const Header = ({ theme, updateTheme }) => {
   const headerStyle = {
     backgroundColor: '#282c34',
     color: 'white',
@@ -97,6 +98,10 @@ const Header = () => {
           >
             Login
           </a>
+          <Button {...{ onClick: updateTheme, className: { ...{ backgroundColor: "black", color: 'white' } } }}>
+            {/* todo add icons in button from antd  */}
+            {theme ? 'Dark' : 'Light'}
+          </Button>
         </nav>
       </div>
     </header>

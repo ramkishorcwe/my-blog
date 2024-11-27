@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { useSelector } from 'react-redux';
 import Header from './components/header/header';
@@ -13,7 +13,11 @@ import { Login, Register } from './components';
 function App() {
   // let authState = useSelector((state) => state.authState)
   const blogState = useSelector((state) => state.blogState)
+  const [theme, setTheme] = useState(true);
   // console.log(authState, blogState);
+  const updateTheme = () => {
+    setTheme(!theme)
+  }
 
 
   // useEffect(() => {
@@ -27,10 +31,13 @@ function App() {
 
   return (
     <>
-      <Header />
-      {/* <Login /> */}
-      <Register />
-      <Footer />
+      <Container {...{ theme }}>
+        <Header {...{ theme, updateTheme }} />
+        {/* <Login /> */}
+        <Register />
+        <Footer />
+      </Container>
+
     </>
   )
 }
