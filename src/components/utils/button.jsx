@@ -2,7 +2,7 @@ const Button = (props) => {
 
   return (
     <>
-      <button {...props}>{props.children ?? props.label ?? "Button"}</button>
+      <button style={props.style ? props.style : { width: 70, height: 35 }} {...props}>{props.children ?? props.label ?? "Button"}</button>
     </>
   );
 };

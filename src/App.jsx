@@ -6,19 +6,19 @@ import Footer from './components/footer/footer';
 // import config from './environmentConfig';
 import auth from './appwrite/auth';
 import Container from './components/utils/container';
-import { Login, Register } from './components';
+import { Login, Register, Home } from './components';
 
 
 
 function App() {
-  // let authState = useSelector((state) => state.authState)
-  const blogState = useSelector((state) => state.blogState)
+  let authState = useSelector((state) => state.authState)
+  // const blogState = useSelector((state) => state.blogState)
   const [theme, setTheme] = useState(true);
   // console.log(authState, blogState);
   const updateTheme = () => {
     setTheme(!theme)
   }
-
+  console.log(authState)
 
   // useEffect(() => {
   //   (async () => {
@@ -34,7 +34,8 @@ function App() {
       <Container {...{ theme }}>
         <Header {...{ theme, updateTheme }} />
         {/* <Login /> */}
-        <Register />
+        {/* {authState.status ? <Home /> : <Register />} */}
+        <Home />
         <Footer />
       </Container>
 
