@@ -27,8 +27,11 @@ class Auth {
     return resp;
   }
   async getUser() {
-
-    const response = await this.account.get()
+    const response = await this.account.get();
+    return response;
+  }
+  async logout() {
+    const response = await this.account.deleteSessions();
     return response;
   }
 }

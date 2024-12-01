@@ -6,7 +6,7 @@ import Footer from './components/footer/footer';
 // import config from './environmentConfig';
 import auth from './appwrite/auth';
 import Container from './components/utils/container';
-import { Login, Register, Home } from './components';
+import { Login, Register, Home, CreateBlog, AboutUs } from './components';
 
 
 
@@ -20,14 +20,14 @@ function App() {
   }
   console.log(authState)
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const data1 = await auth.register("rkishor@okruti.com", "12345678")
-  //     const data = await auth.getUser()
-  //     console.log(data1, data)
-  //   })()
+  useEffect(() => {
+    (async () => {
+      // const data1 = await auth.register("rkishor@okruti.com", "12345678")
+      const data = await auth.getUser()
+      console.log(data)
+    })();
 
-  // }, [])
+  }, [])
 
   return (
     <>
@@ -36,6 +36,11 @@ function App() {
         {/* <Login /> */}
         {/* {authState.status ? <Home /> : <Register />} */}
         <Home />
+        {/* <CreateBlog /> */}
+        {/* <AboutUs /> */}
+        {/* <BrowserRouter>
+          <RouteSetup />
+        </BrowserRouter> */}
         <Footer />
       </Container>
 

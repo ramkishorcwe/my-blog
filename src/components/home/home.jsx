@@ -1,7 +1,14 @@
 import Blog from "../blogs-list/blogs";
 import Button from "../utils/button";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import authService from '../../appwrite/auth'
+
 const Home = () => {
+  const userAuth = useSelector((store) => store.authState.status);
+  const navigate = useNavigate();
   const blogs = [
     {
       title: "Understanding React Hooks",
@@ -29,6 +36,32 @@ const Home = () => {
       description: "A step-by-step guide to deploying React applications on Vercel. Learn how to set up your project and configure CI/CD.",
     },
   ];
+  console.log(userAuth);
+
+  const userLoginStatus = async () => {
+    try {
+      const user = await authService.getUser()
+      if (!user) {
+        navigate('/login')
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    // if (userAuth === false) {
+    //   navigate('/login')
+    // }
+    userLoginStatus()
+  }, [])
+  const createProps = (blog) => {
+    return {
+      ...blog, key: blog.title
+    }
+  }
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", marginLeft: 10 }}>
@@ -36,9 +69,8 @@ const Home = () => {
         <Button {...{ styles: { width: 100, height: 24 } }}>{<PlusCircleOutlined />}</Button>
       </div>
       <div style={{ display: "flex", flexWrap: 'wrap', justifyContent: "center", gap: 20 }}>
-        {blogs.map((blog) => <Blog {...{ ...blog, key: blog.img }} />)}
+        {blogs.map((blog) => <Blog {...createProps(blog)} />)}
       </div>
-
     </div>
   )
 }

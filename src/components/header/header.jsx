@@ -1,22 +1,24 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../utils/logo';
 import { Button } from '../index'
+import { LoginOutlined, MoonFilled, SunFilled, UserOutlined } from '@ant-design/icons';
+import authService from '../../appwrite/auth'
+import { Link } from 'react-router';
+
 
 const Header = ({ theme, updateTheme }) => {
+  const [userLoginStatus, setUserLoginStatus] = useState()
   const headerStyle = {
     backgroundColor: '#282c34',
     color: 'white',
     alignItems: 'center',
-    // position: 'fixed',
-    // top: '0',
     zIndex: '1000',
     padding: '0px 20px',
     width: '100%',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     height: '60px', // Ensure consistent height
     display: 'flex',
-    // justifyContent: 'space-between',
     alignItems: 'center'
   };
 
@@ -50,57 +52,80 @@ const Header = ({ theme, updateTheme }) => {
     color: '#61dafb',
   };
 
+  const userLoginStatusCheck = async () => {
+    try {
+      const user = await authService.getUser()
+      if (user) {
+        setUserLoginStatus(true)
+      } else {
+        setUserLoginStatus(false)
+
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    // if (userAuth === false) {
+    //   navigate('/login')
+    // }
+    userLoginStatusCheck()
+  }, [])
+
   return (
     <header style={headerStyle}>
       <div style={headerSubContainer}>
-        <a href="/" style={logoStyle}>
+        <Link to="/" style={logoStyle}>
           <Logo />
-        </a>
+        </Link>
 
         <nav style={navStyle}>
-          <a
-            href="#about"
-            style={navLinkStyle}
-            onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
-            onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
-          >
-            About
-          </a>
-          <a
-            href="#projects"
+          <Link
+            a="#projects"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
           >
             Projects
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            to="#articles"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
           >
-            Contact
-          </a>
-          <a
-            href="#blog"
+            Articles
+          </Link>
+          <Link
+            to="#blog"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
           >
             Blogs
-          </a>
-          <a
-            href="#login"
+          </Link>
+          <Link
+            to="/about-us"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
           >
-            Login
-          </a>
-          <Button {...{ onClick: updateTheme, className: { ...{ backgroundColor: "black", color: 'white' } } }}>
+            About
+          </Link>
+          <Link
+            to="/login"
+            style={navLinkStyle}
+            onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
+            onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
+          // onClick={()=>{authService.logout}}
+          >
+            {userLoginStatus ? <UserOutlined /> : <LoginOutlined />}
+          </Link>
+          <Button {...{ onClick: updateTheme }}>
             {/* todo add icons in button from antd  */}
-            {theme ? 'Dark' : 'Light'}
+            {theme ? <MoonFilled /> : <SunFilled />}
           </Button>
         </nav>
       </div>
