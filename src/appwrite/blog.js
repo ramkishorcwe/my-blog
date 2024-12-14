@@ -14,6 +14,7 @@ class Blog {
   }
 
   async createBlog(data) {
+    console.log(data)
     const addedData = await this.databases.createDocument(
       databaseId,
       collectionId,
@@ -55,7 +56,6 @@ class Blog {
   }
 
   async getBlog(recordId) {
-
     const result = await this.databases.getDocument(
       databaseId,
       collectionId,

@@ -4,12 +4,17 @@ import { Editor } from '@tinymce/tinymce-react';
 import envObj from '../../environmentConfig'
 import bucket from '../../appwrite/bucket';
 import blog from '../../appwrite/blog';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
   const [uploadImageDetail, setUploadImageDetail] = useState(null);
   const [description, setDescription] = useState();
+  const loginUserId = useSelector((store) => store.authState)
   const editorRef = useRef(null);
+  const navigate = useNavigate();
   useEffect(() => {
+    console.log("loginUserId", loginUserId)
     return () => {
       if (uploadImageDetail !== null) {
         // delete
@@ -22,21 +27,28 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
     console.log(result);
   }
   const log = async () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-    const article = {
-      featuredImage: uploadImageDetail.$id,
-      content: description,
-      status: "true",
-      title: "1"
-    }
-    try {
-      const blog = await blog.createBlog(article)
-      console.log(blog);
-      setUploadImageDetail(null)
-    } catch (error) {
-      console.log(error)
+    if (uploadImageDetail.$id) {
+      if (editorRef.current) {
+        console.log(editorRef.current.getContent());
+      }
+      const article = {
+        featuredImage: uploadImageDetail.$id,
+        content: description,
+        status: "true",
+        title: "1",
+        userId: loginUserId.userData.$id
+      }
+      try {
+        const blog1 = await blog.createBlog(article)
+        console.log(blog1);
+        setUploadImageDetail(null)
+        navigate('/');
+      } catch (error) {
+        console.log(error)
+      }
+
+    } else {
+      console.log("please first add image then submit post")
     }
 
     // upload post and set null on both state
@@ -55,11 +67,11 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
         // update
         const updateImage = await bucket.updateImage(uploadImageDetail.$id, file);
         setUploadImageDetail(updateImage);
-        toast.success("image update success!");
+        // toast.success("image update success!");
       } else {
         const image = await bucket.addImage(file);
         setUploadImageDetail(image);
-        toast.success("success upload");
+        // toast.success("success upload");
       }
 
     } catch (error) {

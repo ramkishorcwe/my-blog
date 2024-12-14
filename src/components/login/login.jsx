@@ -10,8 +10,9 @@ import { Card, Flex, Image } from "antd";
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
-  const userAuth = useSelector((store) => store.authState.status);
+  // const userAuth = useSelector((store) => store.authState.status);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
     console.log(data)
@@ -20,7 +21,7 @@ const Login = () => {
       const session = await authService.login(data)
       if (session) {
         const userData = await authService.getUser()
-        if (userData) dispatch(authLogin(userData));
+        if (userData) dispatch(authLogin({ userData: userData }));
         navigate("/")
       }
     } catch (error) {
