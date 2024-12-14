@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import Logo from '../utils/logo';
 import { Button } from '../index'
 import { LoginOutlined, MoonFilled, SunFilled, UserOutlined } from '@ant-design/icons';
@@ -8,7 +9,8 @@ import { Link } from 'react-router';
 
 
 const Header = ({ theme, updateTheme }) => {
-  const [userLoginStatus, setUserLoginStatus] = useState()
+  const [userLoginStatus, setUserLoginStatus] = useState();
+  const navigate = useNavigate();
   const headerStyle = {
     backgroundColor: '#282c34',
     color: 'white',
@@ -19,7 +21,6 @@ const Header = ({ theme, updateTheme }) => {
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     height: '60px', // Ensure consistent height
     display: 'flex',
-    alignItems: 'center'
   };
 
   const headerSubContainer = {
@@ -55,6 +56,7 @@ const Header = ({ theme, updateTheme }) => {
   const userLoginStatusCheck = async () => {
     try {
       const user = await authService.getUser()
+      console.log(user)
       if (user) {
         setUserLoginStatus(true)
       } else {
@@ -62,6 +64,14 @@ const Header = ({ theme, updateTheme }) => {
 
       }
 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const logoutClick = async () => {
+    try {
+      const logoutStatus = await authService.logout()
+      navigate('/login')
     } catch (error) {
       console.log(error)
     }
@@ -83,7 +93,7 @@ const Header = ({ theme, updateTheme }) => {
 
         <nav style={navStyle}>
           <Link
-            a="#projects"
+            to="/projects"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
@@ -91,7 +101,7 @@ const Header = ({ theme, updateTheme }) => {
             Projects
           </Link>
           <Link
-            to="#articles"
+            to="/articles"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
@@ -99,7 +109,7 @@ const Header = ({ theme, updateTheme }) => {
             Articles
           </Link>
           <Link
-            to="#blog"
+            to="/blog"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
@@ -114,7 +124,7 @@ const Header = ({ theme, updateTheme }) => {
           >
             About
           </Link>
-          <Link
+          {/* <Link
             to="/login"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
@@ -122,7 +132,8 @@ const Header = ({ theme, updateTheme }) => {
           // onClick={()=>{authService.logout}}
           >
             {userLoginStatus ? <UserOutlined /> : <LoginOutlined />}
-          </Link>
+          </Link> */}
+          <button onClick={() => { logoutClick() }}> {userLoginStatus ? <UserOutlined /> : <LoginOutlined />}</button>
           <Button {...{ onClick: updateTheme }}>
             {/* todo add icons in button from antd  */}
             {theme ? <MoonFilled /> : <SunFilled />}

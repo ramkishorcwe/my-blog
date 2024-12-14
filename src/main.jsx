@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router'
-import { AboutUs, Home, Login, Register } from './components/index.js'
+import { AboutUs, CreateBlog, Home, Login, Register } from './components/index.js'
 import Footer from './components/footer/footer.jsx'
 import store from './store/store.js'
 import './index.css'
@@ -27,12 +27,11 @@ const router = createBrowserRouter([
     path: '/login',
     element: <Login />
   },
-  // {
-  //   path: '/about-us',
-  //   element: <AboutUs />
-  // },
-  //   ]
-  // },
+  {
+    path: '/articles',
+    element: <CreateBlog />
+  },
+
   {
     path: '/register',
     element: <Register />
@@ -41,9 +40,6 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </StrictMode>,
-)
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>)

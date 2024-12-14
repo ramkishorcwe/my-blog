@@ -6,7 +6,7 @@ import Footer from './components/footer/footer';
 // import config from './environmentConfig';
 import auth from './appwrite/auth';
 import Container from './components/utils/container';
-import { Login, Register, Home, CreateBlog, AboutUs } from './components';
+import { Home } from './components';
 
 
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
 import { useForm } from "react-hook-form";
 import { Input } from '../index';
 import auth from '../../appwrite/auth'
@@ -7,6 +8,7 @@ import Container from '../utils/container';
 const Register = ({ children }) => {
   const { register, handleSubmit, watch, formState: { errors }, } = useForm();
   const [loader, setLoader] = useState(false);
+  const navigate = useNavigate();
   // useEffect(()=>{
   // try {
 
@@ -21,6 +23,7 @@ const Register = ({ children }) => {
       setLoader(true)
       const registerResponse = auth.register(data.email, data.password, data.name)
       const loginResponse = auth.login(data.email, data.password)
+      navigate('/')
       console.log(registerResponse, data, loginResponse);
     } catch (error) {
       console.log(error)

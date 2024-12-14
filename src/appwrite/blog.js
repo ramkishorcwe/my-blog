@@ -13,8 +13,13 @@ class Blog {
     this.databases = new Databases(client);
   }
 
-  async createBlog(data = {}) {
-    const addedData = await this.databases.createDocument(databaseId, collectionId, ID.unique(), data);
+  async createBlog(data) {
+    const addedData = await this.databases.createDocument(
+      databaseId,
+      collectionId,
+      ID.unique(),
+      { ...data });
+    console.log(addedData);
     return addedData;
   }
 

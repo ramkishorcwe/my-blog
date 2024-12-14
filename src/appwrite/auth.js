@@ -12,26 +12,33 @@ class Auth {
   }
 
   async register(email, password, name = 'No Name') {
-
-    await this.account.create(
-      ID.unique(), // userId
-      email, // email
-      password, // password
-      name // name (optional)
-    );
-    const result = await this.login(email, password)
-    return result
+    try {
+      await this.account.create(ID.unique(), email, password, name);
+      const result = await this.login(email, password)
+      return result
+    } catch (error) {
+      throw error
+    }
   }
-  async login(email, password) {
-    const resp = await this.account.createEmailPasswordSession(email, password)
-    return resp;
+  async login(data) {
+    try {
+      const resp = await this.account.createEmailPasswordSession(data.email, data.password)
+      return resp;
+    } catch (error) {
+      throw error
+    }
   }
   async getUser() {
-    const response = await this.account.get();
-    return response;
+    try {
+      const response = await this.account.get();
+      return response;
+    } catch (error) {
+      console.log(error)
+    }
+
   }
   async logout() {
-    const response = await this.account.deleteSessions();
+    const response = await this.account.deleteSessions('current');
     return response;
   }
 }
