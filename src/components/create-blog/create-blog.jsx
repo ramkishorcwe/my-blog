@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import { Flex } from 'antd';
 import envObj from '../../environmentConfig'
 import bucket from '../../appwrite/bucket';
 import blog from '../../appwrite/blog';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import envConfig from '../../environmentConfig';
 
 const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
   const [uploadImageDetail, setUploadImageDetail] = useState(null);
   const [description, setDescription] = useState();
+  const [title, setTitle] = useState();
   const loginUserId = useSelector((store) => store.authState)
   const editorRef = useRef(null);
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
         featuredImage: uploadImageDetail.$id,
         content: description,
         status: "true",
-        title: "1",
+        title: title,
         userId: loginUserId.userData.$id
       }
       try {
@@ -116,7 +119,16 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
         }}
         onEditorChange={onChange}
       /> */}
-      <input onChange={(e) => uploadFile(e)} type="file" />
+      <Flex>
+        <label name={"image"} htmlFor='image'>Upload Image
+          <input id='image' name='image' onChange={(e) => uploadFile(e)} type="file" />
+        </label>
+        {uploadImageDetail && <img style={{ width: 200, height: 200 }} src={envConfig.bucketImageBaseUrl.replace("imageId", uploadImageDetail.$id)} alt='...' />}
+      </Flex>
+      <label htmlFor='title'>Title
+        <input id='title' name='title' placeholder='Enter Title' type='text' onChange={(e) => setTitle(e.target.value)} />
+      </label>
+
       <Editor
         apiKey={envObj.tinymceKey}
         init={{

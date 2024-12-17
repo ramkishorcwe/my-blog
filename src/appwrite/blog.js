@@ -43,14 +43,14 @@ class Blog {
     return result
   }
 
-  async listBlog(searchData) {
-    const key = Object.keys(searchData)[0];
+  async listBlog(searchData = '') {
+    // const key = Object.keys(searchData)[0];
     const list = await this.databases.listDocuments(
       databaseId,
       collectionId,
-      [
-        Query.equal(key, searchData[key])
-      ]
+      // [
+      //   Query.equal(key, searchData[key])
+      // ]
     );
     return list;
   }
