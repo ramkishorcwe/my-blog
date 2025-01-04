@@ -8,37 +8,9 @@ import authService from '../../appwrite/auth'
 import database from '../../appwrite/blog'
 
 const Home = () => {
-  const userAuth = useSelector((store) => store.authState.status);
+  // const userAuth = useSelector((store) => store.authState.status);
   const navigate = useNavigate();
   const [blogsList, setBlogsList] = useState([]);
-  const blogs = [
-    {
-      title: "Understanding React Hooks",
-      featuredImage: "https://via.placeholder.com/400x200?text=React+Hooks", // Remote image
-      content: "<p>A comprehensive guide to using React Hooks effectively in functional components. Learn useState, useEffect, and custom hooks.</p>",
-    },
-    {
-      title: "Mastering JavaScript ES6+ Features",
-      featuredImage: "https://images.pexels.com/photos/2752777/pexels-photo-2752777.jpeg?auto=compress&cs=tinysrgb&w=600",
-      content: "<p>A comprehensive guide to using React Hooks effectively in functional components. Learn useState, useEffect, and custom hooks.</p>",
-    },
-    {
-      title: "Building Responsive Websites with CSS Grid",
-      featuredImage: "https://images.pexels.com/photos/2752777/pexels-photo-2752777.jpeg?auto=compress&cs=tinysrgb&w=600",
-      content: "<p>A comprehensive guide to using React Hooks effectively in functional components. Learn useState, useEffect, and custom hooks.</p>",
-    },
-    {
-      title: "State Management with Redux Toolkit",
-      featuredImage: "https://images.pexels.com/photos/2752777/pexels-photo-2752777.jpeg?auto=compress&cs=tinysrgb&w=600",
-      content: "<p>A comprehensive guide to using React Hooks effectively in functional components. Learn useState, useEffect, and custom hooks.</p>",
-    },
-    {
-      title: "Deploying Applications with Vercel",
-      featuredImage: "https://images.pexels.com/photos/2752777/pexels-photo-2752777.jpeg?auto=compress&cs=tinysrgb&w=600",
-      content: "<p>A comprehensive guide to using React Hooks effectively in functional components. Learn useState, useEffect, and custom hooks.</p>",
-    },
-  ];
-  console.log(userAuth);
 
   const userLoginStatus = async () => {
     try {

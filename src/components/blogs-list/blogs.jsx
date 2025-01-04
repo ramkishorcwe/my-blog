@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 
 const Blog = (props) => {
   const loginUser = useSelector((store) => store.authState.userData);
+  const imageUrl = envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage);
   // imagesrc = envConfig.bucketImageBaseUrl
   return (
     // <Card>
@@ -25,11 +26,11 @@ const Blog = (props) => {
     <Card
       hoverable
       style={{ width: 300 }}
-      cover={<Image {...{ src: envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage), alt: "...", style: { width: 300, height: 300 } }} />}
+      cover={<Image {...{ src: imageUrl, alt: "...", style: { width: 300, height: 300 } }} />}
       key={props.featuredImage}
     >
       <h4>{props.title}</h4>
-      <p>{HTMLReactParser(props.content)}</p>
+      {HTMLReactParser(props.content)}
       {loginUser?.$id === props.userId && <><Button {...{ style: { width: 60, height: 35 } }}>
         {<EditOutlined />}
       </Button>
