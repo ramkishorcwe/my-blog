@@ -24,8 +24,8 @@ const Login = () => {
         const userData = await authService.getUser()
         if (userData) dispatch(authLogin({ userData: userData }));
         const myUrl = new URL("/", envConfig.clientBaseUrl);
-        location.href = myUrl.href
-        // navigate()
+        // location.href = myUrl.href
+        navigate('/')
       }
     } catch (error) {
       console.log(error.message)
