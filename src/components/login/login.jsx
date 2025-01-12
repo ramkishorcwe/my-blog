@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Container from "../utils/container";
 import { login as authLogin } from '../../store/auth-reducer'
 import authService from '../../appwrite/auth'
-import { Card, Flex, Image } from "antd";
+import { Card, Flex } from "antd";
+import envConfig from '../../environmentConfig'
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -22,7 +23,9 @@ const Login = () => {
       if (session) {
         const userData = await authService.getUser()
         if (userData) dispatch(authLogin({ userData: userData }));
-        navigate("/")
+        const myUrl = new URL("/", envConfig.clientBaseUrl);
+        location.href = myUrl.href
+        // navigate()
       }
     } catch (error) {
       console.log(error.message)
