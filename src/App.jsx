@@ -4,10 +4,9 @@ import { useSelector } from 'react-redux';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
 // import config from './environmentConfig';
-import auth from './appwrite/auth';
 import Container from './components/utils/container';
 import { Home } from './components';
-
+import { userStatus } from '../../store/auth-reducer'
 
 
 function App() {
@@ -23,7 +22,8 @@ function App() {
   useEffect(() => {
     (async () => {
       // const data1 = await auth.register("rkishor@okruti.com", "12345678")
-      const data = await auth.getUser()
+      const userData = await authService.getUser()
+      if (userData) dispatch(userStatus({ userData: userData, status: true }));
       console.log(data)
     })();
 
