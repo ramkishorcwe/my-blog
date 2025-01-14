@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import authService from '../../appwrite/auth'
 import database from '../../appwrite/blog'
+import bucket from "../../appwrite/bucket";
 
 const Home = () => {
   // const userAuth = useSelector((store) => store.authState.status);
@@ -27,8 +28,11 @@ const Home = () => {
   const fetchData = async () => {
     try {
       const blogList = await database.listBlog()
-      console.log(blogList)
+      // const imageUrl = await bucket.fetchImage("675df847001320877414")
+      // console.log(imageUrl)
+      // console.log(blogList)
       setBlogsList(blogList.documents);
+
     } catch (error) {
       console.log(error)
     }

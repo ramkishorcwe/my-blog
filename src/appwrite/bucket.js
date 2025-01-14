@@ -29,6 +29,27 @@ class Bucket {
     return result;
   }
 
+  async fetchImage(id) {
+    const result = this.bucket.getFilePreview(
+      bucketId, // bucketId
+      id, // fileId
+      // 0, // width (optional)
+      // 0, // height (optional)
+      // // ImageGravity.Center, // gravity (optional)
+      // 0, // quality (optional)
+      // 0, // borderWidth (optional)
+      // '', // borderColor (optional)
+      // 0, // borderRadius (optional)
+      // 0, // opacity (optional)
+      // -360, // rotation (optional)
+      // '', // background (optional)
+      // // ImageFormat.Jpg // output (optional)
+    );
+
+    console.log(result);
+    return result;
+  }
+
   async deleteImage(fileId) {
     const result = await this.bucket.deleteFile(
       bucketId, // bucketId
