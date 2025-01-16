@@ -12,7 +12,6 @@ const Blog = (props) => {
     console.log(" blog ", store.authState)
     return store.authState.userData
   });
-  console.log(loginUser)
   const imageUrl = envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage);
   // imagesrc = envConfig.bucketImageBaseUrl
   return (

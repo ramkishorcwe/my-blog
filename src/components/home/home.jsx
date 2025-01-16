@@ -13,6 +13,7 @@ const Home = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [blogsList, setBlogsList] = useState([]);
+  const dispatch = useDispatch();
 
   const userLoginStatus = async () => {
     try {
