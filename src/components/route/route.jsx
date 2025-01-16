@@ -2,9 +2,9 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, createBrowserRouter } from "react-router";
 import { Home, About, AboutUs } from '../index'
-import { userStatus } from '../../store/auth-reducer'
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
+import { login as authLogin } from '../../store/auth-reducer';
+import { useNavigate } from 'react-router';
 // import ReactDOM from "react-dom/client";
 
 //TODO
@@ -25,14 +25,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const RouteSetup = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    (async () => {
-      // const data1 = await auth.register("rkishor@okruti.com", "12345678")
-      const userData = await authService.getUser()
-      if (userData) dispatch(userStatus({ userData: userData, status: true }));
-      console.log(data)
-    })();
-
+  useEffect(async () => {
+    // const data1 = await auth.register("rkishor@okruti.com", "12345678")
+    const userData = await authService.getUser()
+    if (userData) dispatch(userStatus({ userData: userData, status: true }));
+    console.log(data)
   }, [])
   const route = createBrowserRouter([
     {

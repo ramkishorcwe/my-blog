@@ -133,7 +133,7 @@ const Header = ({ theme, updateTheme }) => {
           >
             {userLoginStatus ? <UserOutlined /> : <LoginOutlined />}
           </Link> */}
-          <button onClick={() => { logoutClick() }}> {userLoginStatus ? <UserOutlined /> : <LoginOutlined />}</button>
+          <button style={{ backgroundColor: "unset", color: 'white', border: 'unset', fontSize: 'large' }} onClick={() => { logoutClick() }}> {!userLoginStatus ? <UserOutlined /> : <LoginOutlined />}</button>
           <Button {...{ onClick: updateTheme }}>
             {/* todo add icons in button from antd  */}
             {theme ? <MoonFilled /> : <SunFilled />}

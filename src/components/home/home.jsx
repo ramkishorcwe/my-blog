@@ -10,9 +10,9 @@ import { userStatus } from '../../store/auth-reducer'
 
 const Home = () => {
   // const userAuth = useSelector((store) => store.authState.status);
-  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [blogsList, setBlogsList] = useState([]);
+  const dispatch = useDispatch();
 
   const userLoginStatus = async () => {
     try {
