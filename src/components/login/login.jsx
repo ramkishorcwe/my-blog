@@ -22,10 +22,10 @@ const Login = () => {
       const session = await authService.login(data)
       if (session) {
         const userData = await authService.getUser()
-        if (userData) dispatch(authLogin({ userData: userData }));
-        const myUrl = new URL("/", envConfig.clientBaseUrl);
-        location.href = myUrl.href
-        // navigate()
+        if (userData) dispatch(authLogin({ userData: userData, status: true }));
+        // const myUrl = new URL("/", envConfig.clientBaseUrl);
+        // location.href = myUrl.href
+        navigate('/')
       }
     } catch (error) {
       console.log(error.message)

@@ -6,11 +6,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import authService from '../../appwrite/auth'
 import database from '../../appwrite/blog'
-import { login as authLogin } from '../../store/auth-reducer'
-
+import { userStatus } from '../../store/auth-reducer'
 
 const Home = () => {
   // const userAuth = useSelector((store) => store.authState.status);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [blogsList, setBlogsList] = useState([]);
   const dispatch = useDispatch();
@@ -18,28 +18,25 @@ const Home = () => {
   const userLoginStatus = async () => {
     try {
       const user = await authService.getUser()
-      if (!user) {
-        navigate('/login')
-      } else {
-        dispatch(authLogin({ userData: user, status: true }))
+      if (user) {
+        dispatch(userStatus({ userData: user, status: true }));
       }
 
     } catch (error) {
       console.log(error)
+      // navigate('/login')
     }
   }
   const fetchData = async () => {
     try {
       const blogList = await database.listBlog()
       setBlogsList(blogList.documents);
-
     } catch (error) {
       console.log(error)
     }
   }
-
   useEffect(() => {
-    userLoginStatus()
+    userLoginStatus();
     fetchData()
   }, [])
   const createProps = (blog) => {

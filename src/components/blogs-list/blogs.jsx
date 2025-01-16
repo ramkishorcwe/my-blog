@@ -9,7 +9,8 @@ import { useSelector } from 'react-redux'
 
 const Blog = (props) => {
   const loginUser = useSelector((store) => {
-    return store.authState.userData;
+    console.log(" blog ", store.authState)
+    return store.authState.userData
   });
   const imageUrl = envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage);
   // imagesrc = envConfig.bucketImageBaseUrl
