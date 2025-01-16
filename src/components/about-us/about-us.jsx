@@ -48,16 +48,16 @@ const AboutUs = () => {
           </p>
 
           <div style={socialLinksStyle}>
-            <a href="mailto:example@example.com" >
+            <a href="mailto:iamrkishoryadav@example.com" >
               <MailOutlined />
             </a>
-            <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" >
+            <a href="https://www.linkedin.com/in/ram-kishor-47734a206/" target="_blank" rel="noopener noreferrer" >
               <LinkedinOutlined />
             </a>
-            <a href="https://instagram.com/your-profile" target="_blank" rel="noopener noreferrer" >
+            <a href="https://www.instagram.com/ram.kishor_yadav?igsh=MW9wN2Rmb3M4YjV0cQ==" target="_blank" rel="noopener noreferrer" >
               <InstagramOutlined />
             </a>
-            <a href="https://facebook.com/your-profile" target="_blank" rel="noopener noreferrer" >
+            <a href="https://www.facebook.com/ram.kishor.946954" target="_blank" rel="noopener noreferrer" >
               <FacebookOutlined />
             </a>
           </div>

@@ -47,6 +47,8 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
         setUploadImageDetail(null)
         navigate('/');
       } catch (error) {
+        blog.deleteBlog(uploadImageDetail.$id)
+        setUploadImageDetail(null)
         console.log(error)
       }
 
