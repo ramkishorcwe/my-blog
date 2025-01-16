@@ -15,16 +15,13 @@ const authSlice = createSlice({
       state.userData = action.payload.userData;
     },
     userStatus: (state, action) => {
-      if (newUser.$id) {
-        const newUser = auth.getUser();
-        state.status = false;
-        state.userData = newUser;
+      if (action.payload.userData.$id) {
+        state.status = true;
+        state.userData = action.payload.userData;
       } else {
         state.status = false;
         state.userData = newUser;
       }
-      state.status = true;
-      state.userData = action.payload.userData;
     },
     logout: (state) => {
       state.status = false;
@@ -33,6 +30,6 @@ const authSlice = createSlice({
   }
 })
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, userStatus } = authSlice.actions;
 
 export default authSlice.reducer;

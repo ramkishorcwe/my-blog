@@ -23,7 +23,7 @@ const Login = () => {
       if (session) {
         const userData = await authService.getUser()
         if (userData) dispatch(authLogin({ userData: userData, status: true }));
-        const myUrl = new URL("/", envConfig.clientBaseUrl);
+        // const myUrl = new URL("/", envConfig.clientBaseUrl);
         // location.href = myUrl.href
         navigate('/')
       }

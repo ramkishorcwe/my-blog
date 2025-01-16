@@ -1,7 +1,10 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, createBrowserRouter } from "react-router";
 import { Home, About, AboutUs } from '../index'
+import { userStatus } from '../../store/auth-reducer'
+import { useDispatch, useSelector } from 'react-redux';
+
 // import ReactDOM from "react-dom/client";
 
 //TODO
@@ -21,6 +24,16 @@ import { Home, About, AboutUs } from '../index'
 
 
 const RouteSetup = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    (async () => {
+      // const data1 = await auth.register("rkishor@okruti.com", "12345678")
+      const userData = await authService.getUser()
+      if (userData) dispatch(userStatus({ userData: userData, status: true }));
+      console.log(data)
+    })();
+
+  }, [])
   const route = createBrowserRouter([
     {
       path: '/',

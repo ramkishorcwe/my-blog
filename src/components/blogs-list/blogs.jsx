@@ -8,7 +8,11 @@ import envConfig from '../../environmentConfig'
 import { useSelector } from 'react-redux'
 
 const Blog = (props) => {
-  const loginUser = useSelector((store) => store.authState.userData);
+  const loginUser = useSelector((store) => {
+    console.log(" blog ", store.authState)
+    return store.authState.userData
+  });
+  console.log(loginUser)
   const imageUrl = envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage);
   // imagesrc = envConfig.bucketImageBaseUrl
   return (
