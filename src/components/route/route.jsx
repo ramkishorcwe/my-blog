@@ -2,35 +2,27 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, createBrowserRouter } from "react-router";
 import { Home, About, AboutUs } from '../index'
-import { useDispatch } from 'react-redux';
-import { login as authLogin } from '../../store/auth-reducer';
+import { login as authLogin } from '../../store/auth-reducer';  //todo
 import { useNavigate } from 'react-router';
-// import ReactDOM from "react-dom/client";
-
-//TODO
-
-// import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-// import React, { Suspense, lazy } from "react";
-// import {
-//   dashboard,
-//   homePath,
-//   loginPath,
-//   rootPath
-// } from "./routePaths";
-
-// import Loader from "../components/loader";
-// import ProtectedRoute from "./protectedRoute";
-
-
+import { userStatus } from '../../store/auth-reducer'  //todo
+import { useDispatch, useSelector } from 'react-redux';
 
 const RouteSetup = () => {
-  const dispatch = useDispatch();
-  useEffect(async () => {
-    // const data1 = await auth.register("rkishor@okruti.com", "12345678")
-    const userData = await authService.getUser()
-    if (userData) dispatch(userStatus({ userData: userData, status: true }));
-    console.log(data)
-  }, [])
+  // TODO
+  //  when use this component then uncomment below code
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   (async () => {
+  //     const userData = await authService.getUser()
+  //     if (userData) {
+  //       dispatch(authLogin({ userData: userData, status: true }));
+  //     }
+  //     else {
+  //       navigate('/login')
+  //     }
+  //   })();
+  // }, [])
   const route = createBrowserRouter([
     {
       path: '/',
@@ -79,7 +71,6 @@ const RouteSetup = () => {
   )
 }
 
-export default RouteSetup
 
 
 
