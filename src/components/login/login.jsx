@@ -8,6 +8,7 @@ import { login as authLogin } from '../../store/auth-reducer'
 import authService from '../../appwrite/auth'
 import { Card, Flex } from "antd";
 import envConfig from '../../environmentConfig'
+import { HomeFilled } from "@ant-design/icons";
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -62,8 +63,14 @@ const Login = () => {
             {errors.exampleRequired && <span>This field is required</span>}
             <input type="submit" />
           </form>
-          if not register?-
-          <Link to={'/register'}> Register</Link>
+          <Flex>
+            <Flex>
+              <Link to={'/'}> <HomeFilled /></Link>
+            </Flex>
+            <Flex>if not register?-
+              <Link to={'/register'}> Register</Link></Flex>
+
+          </Flex>
         </Card>
       </Flex>
     </Container>

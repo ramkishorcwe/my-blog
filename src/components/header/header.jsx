@@ -6,10 +6,12 @@ import { Button } from '../index'
 import { LoginOutlined, MoonFilled, SunFilled, UserOutlined } from '@ant-design/icons';
 import authService from '../../appwrite/auth'
 import { Link } from 'react-router';
+import { useSelector } from 'react-redux';
 
 
 const Header = ({ theme, updateTheme }) => {
   const [userLoginStatus, setUserLoginStatus] = useState();
+  const loginUser = useSelector((state) => state.authState.userData)
   const navigate = useNavigate();
   const headerStyle = {
     backgroundColor: '#282c34',
@@ -69,12 +71,14 @@ const Header = ({ theme, updateTheme }) => {
     }
   }
   const logoutClick = async () => {
-    try {
-      const logoutStatus = await authService.logout()
-      navigate('/login')
-    } catch (error) {
-      console.log(error)
+    if (loginUser && loginUser?.status) {
+      try {
+        const logoutStatus = await authService.logout()
+      } catch (error) {
+        console.log(error)
+      }
     }
+    navigate('/login')
   }
 
   useEffect(() => {
