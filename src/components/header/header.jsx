@@ -9,10 +9,12 @@ import { Link } from 'react-router';
 import { useSelector } from 'react-redux';
 
 
-const Header = ({ theme, updateTheme }) => {
+const Header = () => {
   const [userLoginStatus, setUserLoginStatus] = useState();
+  const [theme, setTheme] = useState(true); //todo system se 
   const loginUser = useSelector((state) => state.authState.userData)
   const navigate = useNavigate();
+
   const headerStyle = {
     backgroundColor: '#282c34',
     color: 'white',
@@ -54,6 +56,11 @@ const Header = ({ theme, updateTheme }) => {
   const navLinkHover = {
     color: '#61dafb',
   };
+
+  function updateTheme() {
+    console.log("Hello")
+    setTheme(!theme)
+  }
 
   const userLoginStatusCheck = async () => {
     try {
@@ -97,6 +104,14 @@ const Header = ({ theme, updateTheme }) => {
 
         <nav style={navStyle}>
           <Link
+            to="/"
+            style={navLinkStyle}
+            onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
+            onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
+          >
+            Blogs
+          </Link>
+          <Link
             to="/projects"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
@@ -105,20 +120,12 @@ const Header = ({ theme, updateTheme }) => {
             Projects
           </Link>
           <Link
-            to="/articles"
+            to="/create-blog"
             style={navLinkStyle}
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
           >
             Articles
-          </Link>
-          <Link
-            to="/blog"
-            style={navLinkStyle}
-            onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
-            onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
-          >
-            Blogs
           </Link>
           <Link
             to="/about-us"

@@ -7,6 +7,7 @@ import Footer from './components/footer/footer';
 import Container from './components/utils/container';
 import { Home } from './components';
 import { userStatus } from '../../store/auth-reducer'
+import RouterConfig from './components/router-config/route';
 
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
   // const blogState = useSelector((state) => state.blogState)
   const [theme, setTheme] = useState(true);
   // console.log(authState, blogState);
-  const updateTheme = () => {
+  function updateTheme() {
+    console.log("Hello")
     setTheme(!theme)
   }
   console.log(authState)
@@ -32,16 +34,17 @@ function App() {
   return (
     <>
       <Container {...{ theme }}>
-        <Header {...{ theme, updateTheme }} />
+        {/* <Header {...{ theme, updateTheme }} /> */}
         {/* <Login /> */}
         {/* {authState.status ? <Home /> : <Register />} */}
-        <Home />
+        {/* <Home /> */}
         {/* <CreateBlog /> */}
         {/* <AboutUs /> */}
         {/* <BrowserRouter>
-          <RouteSetup />
+          // <RouteSetup />
         </BrowserRouter> */}
-        <Footer />
+        {/* <Footer /> */}
+        <RouterConfig />
       </Container>
 
     </>

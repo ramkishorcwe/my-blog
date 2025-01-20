@@ -6,13 +6,26 @@ import Card from 'antd/es/card/Card'
 import HTMLReactParser from 'html-react-parser/lib/index'
 import envConfig from '../../environmentConfig'
 import { useSelector } from 'react-redux'
+import blogConfig from '../../appwrite/blog'
 
 const Blog = (props) => {
   const loginUser = useSelector((store) => {
     return store.authState.userData
   });
   const imageUrl = envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage);
+
   // imagesrc = envConfig.bucketImageBaseUrl
+  const deleteBlog = (id) => {
+    try {
+      blogConfig.deleteBlog(id)
+      alert("Blog Delete Successful!")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const editBlog = (data) => {
+    console.log(data)
+  }
   return (
     // <Card>
     //   <h3>{props.title}</h3>
@@ -33,10 +46,10 @@ const Blog = (props) => {
     >
       <h4>{props.title}</h4>
       {HTMLReactParser(props.content)}
-      {loginUser?.$id === props.userId && <><Button {...{ style: { width: 60, height: 35 } }}>
+      {loginUser?.$id === props.userId && <><Button {...{ style: { width: 60, height: 35 }, onClick: editBlog, data: props }}>
         {<EditOutlined />}
       </Button>
-        <Button  {...{ style: { width: 60, height: 35, color: 'red' } }}>
+        <Button  {...{ style: { width: 60, height: 35, color: 'red' }, onClick: deleteBlog, data: props.$id, name: "blogList" }}>
           {<DeleteOutlined />}
         </Button></>}
       {/* <Meta title={props.title} description="www.instagram.com" /> */}
