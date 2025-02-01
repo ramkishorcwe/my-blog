@@ -9,7 +9,7 @@ const navigate = useNavigate();
 
   const handleClick = () => {
     const callbackUrl = `${window.location.origin}`;
-    const googleClientId = "765603935728-81mhv0j16eal6jdljbtqgak7p5veon9c"; //.apps.googleusercontent.com
+    const googleClientId = "765603935728-81mhv0j16eal6jdljbtqgak7p5veon9c.apps.googleusercontent.com";
     const targetUrl = `https://my-blog-zeta-liard.vercel.app/o/oauth2/auth?redirect_uri=${encodeURIComponent(
       callbackUrl
     )}&response_type=token&client_id=${googleClientId}&scope=openid%20email%20profile`;
