@@ -40,11 +40,11 @@ const Blog = (props) => {
     // </Card>
     <Card
       hoverable
-      style={{ width: 300 }}
-      cover={<Image {...{ src: imageUrl, alt: "...", style: { width: 300, height: 300 } }} />}
+      style={{ width: 300, padding: "unset", margin: "unset" }}
+      cover={<Image {...{ src: imageUrl, alt: "...", style: { width: 300, height: 180 } }} />}
       key={props.featuredImage}
     >
-      <h4>{props.title}</h4>
+      <h4 style={{ padding: "unset", margin: "unset" }}>{props.title}</h4>
       {HTMLReactParser(props.content)}
       {loginUser?.$id === props.userId && <><Button {...{ style: { width: 60, height: 35 }, onClick: editBlog, data: props }}>
         {<EditOutlined />}
