@@ -72,6 +72,7 @@ const Login = () => {
               </Flex>
               <Flex>if not register?-
                 <Link to={'/register'}> Register</Link></Flex>
+
               <OAuthLogin />
             </Flex>
           </Flex>

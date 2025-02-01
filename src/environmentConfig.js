@@ -7,5 +7,6 @@ const config = {
   tinymceKey: String(import.meta.env.VITE_TINYMCE_KEY),
   bucketImageBaseUrl: String(import.meta.env.VITE_BUCKET_IMAGE_BASEURL),
   clientBaseUrl: String(import.meta.env.VITE_CLIENT_URL),
+  clientGoogleId: String(import.meta.env.VITE_GOOGLE_CLIENTID)
 }
 export default config;

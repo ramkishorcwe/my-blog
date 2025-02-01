@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import envConf from '../../environmentConfig'
 
 const OAuthLogin = ()=>{
 const navigate = useNavigate();
@@ -9,23 +10,42 @@ const navigate = useNavigate();
 
   const handleClick = () => {
     const callbackUrl = `${window.location.origin}`;
-    const googleClientId = "765603935728-81mhv0j16eal6jdljbtqgak7p5veon9c.apps.googleusercontent.com";
-    const targetUrl = `https://my-blog-zeta-liard.vercel.app/o/oauth2/auth?redirect_uri=${encodeURIComponent(
+    const targetUrl =`https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${encodeURIComponent(
       callbackUrl
-    )}&response_type=token&client_id=${googleClientId}&scope=openid%20email%20profile`;
+    )}&response_type=token&client_id=${envConf.clientGoogleId}&scope=openid%20email%20profile`;
     window.location.href = targetUrl;
   };
 
-  useEffect(() => {
-    const accessTokenRegex = /access_token=([^&]+)/;
-    const isMatch = window.location.href.match(accessTokenRegex);
+  // useEffect(() => {
+  //   const accessTokenRegex = /access_token=([^&]+)/;
+  //   const isMatch = window.location.href.match(accessTokenRegex);
 
-    if (isMatch) {
-      const accessToken = isMatch[1];
-      Cookies.set("access_token", accessToken);
-      setIsLoggedin(true);
-    }
-  }, []);
+  //   if (isMatch) {
+  //     const accessToken = isMatch[1];
+  //     Cookies.set("access_token", accessToken);
+  //     setIsLoggedin(true);
+  //   }
+  // }, []);
+  useEffect(() => {
+  const accessTokenRegex = /access_token=([^&]+)/;
+  const errorRegex = /error=([^&]+)/;
+
+  const accessTokenMatch = window.location.href.match(accessTokenRegex);
+  const errorMatch = window.location.href.match(errorRegex);
+
+  if (errorMatch) {
+    console.error("OAuth error:", errorMatch[1]);
+    alert("Authentication failed. Please try again.");
+    return;
+  }
+
+  if (accessTokenMatch) {
+    const accessToken = accessTokenMatch[1];
+    Cookies.set("access_token", accessToken);
+    setIsLoggedin(true);
+  }
+}, []);
+
 
   useEffect(() => {
     if (isLoggedin) {
