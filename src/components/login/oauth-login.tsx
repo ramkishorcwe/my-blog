@@ -13,6 +13,7 @@ const navigate = useNavigate();
     const targetUrl =`https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${encodeURIComponent(
       callbackUrl
     )}&response_type=token&client_id=${envConf.clientGoogleId}&scope=openid%20email%20profile`;
+    console.log(targetUrl,"Test this url")
     window.location.href = targetUrl;
   };
 
