@@ -10,6 +10,7 @@ const navigate = useNavigate();
 
   const handleClick = () => {
     const callbackUrl = `${window.location.origin}`;
+    console.log(envConf.clientGoogleId,"Test this url")
     const targetUrl =`https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=${encodeURIComponent(
       callbackUrl
     )}&response_type=token&client_id=${envConf.clientGoogleId}&scope=openid%20email%20profile`;
