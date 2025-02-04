@@ -84,9 +84,6 @@ import Footer from "../footer/footer.jsx"
 // import { Header } from "antd/es/layout/layout.js";
 // import Loader from "../components/loader";
 // import ProtectedRoute from "./protectedRoute";
-
-// import route paths
-// import { createBrowserRouter, RouterProvider } from 'react-router'
 const importComponentByLazyLoading = (componentName) => {
   return React.lazy(() =>
     import('../index.js').then((module) => ({ default: module[componentName] }))

@@ -1,19 +1,21 @@
 import { useForm } from "react-hook-form";
 import { Input } from '../index';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import Container from "../utils/container";
+// import Container from "../utils/container";
 import { login as authLogin } from '../../store/auth-reducer'
 import authService from '../../appwrite/auth'
 import { Card, Flex } from "antd";
 import envConfig from '../../environmentConfig'
-import { HomeFilled } from "@ant-design/icons";
+import { EyeFilled, EyeInvisibleOutlined, HomeFilled } from "@ant-design/icons";
 import OAuthLogin from "./oauth-login";
+import './login.css'
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
   // const userAuth = useSelector((store) => store.authState.status);
+  const [isShowPassword, setIsShowPassword] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -50,35 +52,32 @@ const Login = () => {
   }, [])
 
   return (<>
-    <Container >
-
-      <h1>Login</h1>
-      <Card justify={"center"} gap={40}>
+    <Card className="container">
+      <h1 className="background-text">Welcome to Our Blog</h1>
+      <Card className="below-container" justify={"center"} gap={40}>
         <Flex>
-          <img style={{ width: 400, height: 250 }} src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg" alt="..." />
+          <img className="login-image" src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg" alt="..." />
 
           <Flex vertical={true}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* <input defaultValue="test" {...register("example")} /> */}
-              {/* <input {...register("exampleRequired")} /> */}
               <Input {...{ type: 'text', placeholder: 'Email', label: 'Email', name: 'email', register: register }} />
-              <Input {...{ type: 'password', label: 'Password', name: 'password', register: register }} />
+              <div>
+                <Input {...{ type: isShowPassword ? 'password' : 'text', label: 'Password', name: 'password', register: register }} />
+                {isShowPassword ? <EyeFilled style={{ position: "absolute", bottom: 198, right: 65 }} onClick={() => setIsShowPassword(!isShowPassword)} /> : <EyeInvisibleOutlined style={{ position: "absolute", bottom: 198, right: 65 }} onClick={() => setIsShowPassword(!isShowPassword)} />}
+              </div>
               {errors.exampleRequired && <span>This field is required</span>}
-              <input type="submit" />
+              <input className="submit-button" type="submit" />
             </form>
             <Flex>
-              <Flex>
-                <Link to={'/'}> <HomeFilled /></Link>
-              </Flex>
-              <Flex>if not register?-
-                <Link to={'/register'}> Register</Link></Flex>
-
-              <OAuthLogin />
+              <div>if not register?-
+                <Link to={'/register'}> Register</Link>
+                <OAuthLogin />
+              </div>
             </Flex>
           </Flex>
         </Flex>
       </Card>
-    </Container>
+    </Card>
   </>)
 }
 export default Login;

@@ -60,7 +60,7 @@ const navigate = useNavigate();
       <div>
         <div className="btn-container">
           <button className="btn btn-primary" onClick={handleClick}>
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: "center", padding: 2, gap: 5}}>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: "center", padding: 2, gap: 5, backgroundColor: "transparent"}}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 326667 333333"
