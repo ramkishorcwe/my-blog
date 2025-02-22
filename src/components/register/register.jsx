@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { useForm } from "react-hook-form";
 import { Input } from '../index';
 import auth from '../../appwrite/auth'
 import Container from '../utils/container';
+import './register.css'
+import { Card } from 'antd';
 
 const Register = ({ children }) => {
   const { register, handleSubmit, watch, formState: { errors }, } = useForm();
@@ -33,15 +35,18 @@ const Register = ({ children }) => {
 
   }
   return (
-    <Container>
-      <h1>Register</h1>
-      {loader ? "Loading..." : <form onSubmit={handleSubmit(onSubmit)}>
-        <Input {...{ type: 'email', label: 'Email', name: 'email', register: register }} />
-        <Input {...{ type: 'password', label: 'Password', name: 'password', register: register }} />
-        <Input {...{ type: 'text', label: 'Name', name: 'name', register: register }} />
-        {errors.exampleRequired && <span>This field is required</span>}
-        <input type="submit" />
-      </form>}
+    <Container className="register-container">
+      <h1 className='main-heading'>Register</h1>
+      <Card>
+        {loader ? "Loading..." : <form onSubmit={handleSubmit(onSubmit)}>
+          <Input  {...{ type: 'email', label: 'Email', className: 'input', name: 'email', register: register }} />
+          <Input {...{ type: 'password', label: 'Password', className: 'input', name: 'password', register: register }} />
+          <Input {...{ type: 'text', label: 'Name', className: 'input', name: 'name', register: register }} />
+          {errors.exampleRequired && <span>This field is required</span>}
+          <input type="submit" />
+        </form>}
+        <span>already have an account <Link to={'/login'}> Login</Link></span>
+      </Card>
     </Container>
   )
 }

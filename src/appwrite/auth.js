@@ -1,5 +1,5 @@
 
-import { Client, Account, ID } from 'appwrite';
+import { Client, Account, ID, OAuthProvider } from 'appwrite';
 class Auth {
   account;
 
@@ -28,6 +28,21 @@ class Auth {
       throw error
     }
   }
+
+  async registerOAuth() {
+    try {
+      const resp = await this.account.createOAuth2Session(
+        OAuthProvider.Google, // provider
+        'http://localhost:5173/', // redirect here on success
+        'http://localhost:5173/login', // redirect here on failure
+        // ['repo', 'user'] // scopes (optional)
+      );
+      return resp;
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   async getUser() {
     try {
       const response = await this.account.get();

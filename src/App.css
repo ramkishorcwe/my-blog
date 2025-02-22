@@ -40,3 +40,7 @@
 .read-the-docs {
   color: #888;
 }
+
+.header-footer-gap{
+  min-height: 70vh;
+}

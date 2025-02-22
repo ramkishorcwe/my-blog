@@ -1,5 +1,6 @@
 import Blog from "../blogs-list/blogs";
 import Button from "../utils/button";
+import '../../components/'
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -48,7 +49,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="header-footer-gap">
       <div style={{ display: "flex", justifyContent: "space-between", marginLeft: 10 }}>
         <h1>My Blogs</h1>
         <Button {...{ styles: { width: 100, height: 24 }, onClick: newBlog }} >{<PlusCircleOutlined />}</Button>

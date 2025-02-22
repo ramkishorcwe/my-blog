@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import envConf from '../../environmentConfig'
+import auth from "../../appwrite/auth";
+import { OAuthProvider } from "appwrite";
 
 const OAuthLogin = ()=>{
 const navigate = useNavigate();
@@ -15,7 +17,8 @@ const navigate = useNavigate();
       callbackUrl
     )}&response_type=token&client_id=${envConf.clientGoogleId}&scope=openid%20email%20profile`;
     console.log(targetUrl,"Test this url")
-    window.location.href = targetUrl;
+    auth.registerOAuth();
+    // window.location.href = targetUrl;
   };
 
   // useEffect(() => {

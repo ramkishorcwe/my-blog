@@ -21,7 +21,7 @@ const Header = () => {
     alignItems: 'center',
     zIndex: '1000',
     padding: '0px 20px',
-    width: '100%',
+    maxWidth: '100vw',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     height: '60px', // Ensure consistent height
     display: 'flex',

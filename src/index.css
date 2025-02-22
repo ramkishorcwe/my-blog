@@ -71,3 +71,6 @@ button:focus-visible {
   margin: 0px;
   padding: 0px;
 }
+.header-footer-gap{
+  min-height: 65vh;
+}

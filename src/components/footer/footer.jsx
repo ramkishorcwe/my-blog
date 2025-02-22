@@ -7,10 +7,9 @@ const Footer = () => {
     textAlign: 'center',
     padding: '20px 10px',
     // position: 'relative',
-    // position: 'fixed',
-    // top: '0',
+    position: 'fixed',
     zIndex: '1000',
-    // bottom: '0',
+    bottom: '0',
     width: '100%',
     fontSize: '14px',
   };

@@ -31,7 +31,7 @@ const AboutUs = () => {
   };
 
   return (
-    <Card style={containerStyle}>
+    <Card className='header-footer-gap' style={containerStyle}>
       <Flex gap={20}>
         <Card>
           <h1 style={headingStyle}>About Me</h1>

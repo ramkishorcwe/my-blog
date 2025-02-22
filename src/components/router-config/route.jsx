@@ -103,7 +103,7 @@ const RouterConfig = () => {
     <Suspense fallback={<Spin />}>
       <BrowserRouter>
         <Routes>
-          <Route path={home} element={<><Header /><Outlet /><Footer /></>}>
+          <Route path={home} element={<><Header /><Outlet style={{ minHeight: "70vh" }} /><Footer /></>}>
             {/* <Route index element={<HomeComponent />} /> */}
             <Route path={home} element={<HomeComponent />} />
             <Route path={about} element={<AboutUsComponent />} />
