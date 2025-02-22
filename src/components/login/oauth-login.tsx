@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import envConf from '../../environmentConfig'
 import auth from "../../appwrite/auth";
-import { OAuthProvider } from "appwrite";
 
 const OAuthLogin = ()=>{
 const navigate = useNavigate();

@@ -1,5 +1,6 @@
 
 import { Client, Account, ID, OAuthProvider } from 'appwrite';
+import envConfig from '../../src/environmentConfig'
 class Auth {
   account;
 
@@ -33,8 +34,8 @@ class Auth {
     try {
       const resp = await this.account.createOAuth2Session(
         OAuthProvider.Google, // provider
-        'http://localhost:5173/', // redirect here on success
-        'http://localhost:5173/login', // redirect here on failure
+        envConfig.clientBaseUrl, // redirect here on success
+        envConfig.clientUrlLogin, // redirect here on failure
         // ['repo', 'user'] // scopes (optional)
       );
       return resp;
