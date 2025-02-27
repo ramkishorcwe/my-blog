@@ -1,4 +1,4 @@
-import Blog from "../blogs-list/blogs";
+import Blog from "../blog/blogs-list/blogs";
 import Button from "../utils/button";
 import '../../components/'
 import { PlusCircleOutlined } from "@ant-design/icons";

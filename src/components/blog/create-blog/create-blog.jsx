@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import { useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react'
 import { Editor } from '@tinymce/tinymce-react';
-import { Flex } from 'antd';
-import envObj from '../../environmentConfig'
-import bucket from '../../appwrite/bucket';
-import blog from '../../appwrite/blog';
+import {Flex, Image, Input, Button} from 'antd';
+import envObj from '../../../environmentConfig'
+import bucket from '../../../appwrite/bucket';
+import blog from '../../../appwrite/blog';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import envConfig from '../../environmentConfig';
+import { UploadOutlined } from '@ant-design/icons';
+
 
 const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
   const [uploadImageDetail, setUploadImageDetail] = useState(null);
   const [description, setDescription] = useState();
   const [title, setTitle] = useState();
   const loginUserId = useSelector((store) => store.authState)
+  const imgId = useRef(null)
   const editorRef = useRef(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     console.log("loginUserId", loginUserId)
     return () => {
-      if (uploadImageDetail !== null) {
+      // console.log(uploadImageDetail.$id, title, loginUserId)
+      if (imgId.current&&imgId.current.$id) {
         // delete
-        deleteImage()
+        console.log(uploadImageDetail);
+        bucket.deleteImage(imgId.current.$id)
+            .then(result => console.log(result))
+            .catch(e=>console.log(e))
       }
     }
   }, [])
-  const deleteImage = async () => {
-    const result = await bucket.deleteImage(uploadImageDetail.$id)
-    console.log(result);
-  }
   const log = async () => {
     if (uploadImageDetail.$id) {
       if (editorRef.current) {
@@ -44,11 +46,10 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
       try {
         const blog1 = await blog.createBlog(article)
         console.log(blog1);
+        imgId.current = null
         setUploadImageDetail(null)
         navigate('/');
       } catch (error) {
-        blog.deleteBlog(uploadImageDetail.$id)
-        setUploadImageDetail(null)
         console.log(error)
       }
 
@@ -68,13 +69,16 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
     console.log(e.target.files[0]);
     const file = e.target.files[0]
     try {
+      console.log(uploadImageDetail)
       if (uploadImageDetail !== null) {
         // update
         const updateImage = await bucket.updateImage(uploadImageDetail.$id, file);
+        imgId.current = updateImage
         setUploadImageDetail(updateImage);
         // toast.success("image update success!");
       } else {
         const image = await bucket.addImage(file);
+        imgId.current = image;
         setUploadImageDetail(image);
         // toast.success("success upload");
       }
@@ -86,49 +90,19 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
 
   return (
     <div>
-      {/* add image upload todo */}
-      {/* <Editor
-        initialValue={defaultValue}
-        init={{
-          initialValue: defaultValue,
-          height: 500,
-          menubar: true,
-          plugins: [
-            "image",
-            "advlist",
-            "autolink",
-            "lists",
-            "link",
-            "image",
-            "charmap",
-            "preview",
-            "anchor",
-            "searchreplace",
-            "visualblocks",
-            "code",
-            "fullscreen",
-            "insertdatetime",
-            "media",
-            "table",
-            "code",
-            "help",
-            "wordcount",
-            "anchor",
-          ],
-          toolbar:
-            "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
-          content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
-        }}
-        onEditorChange={onChange}
-      /> */}
       <Flex>
         <label name={"image"} htmlFor='image'>Upload Image
-          <input id='image' name='image' onChange={(e) => uploadFile(e)} type="file" />
+          <Input id='image' name='image' onChange={(e) => uploadFile(e)} type="file"  title={<UploadOutlined />} />
         </label>
-        {uploadImageDetail && <img style={{ width: 200, height: 200 }} src={envConfig.bucketImageBaseUrl.replace("imageId", uploadImageDetail.$id)} alt='...' />}
+        {uploadImageDetail &&
+        <Image
+            width={200}
+            src={envObj.bucketImageBaseUrl.replace("imageId", uploadImageDetail.$id)}
+            alt='...'
+        />}
       </Flex>
       <label htmlFor='title'>Title
-        <input id='title' name='title' placeholder='Enter Title' type='text' onChange={(e) => setTitle(e.target.value)} />
+        <Input id='title' name='title' placeholder='Enter Title' type='text' onChange={(e) => setTitle(e.target.value)} />
       </label>
 
       <Editor
@@ -180,8 +154,7 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
         initialValue=""
         onFocusOut={onChange}
       />
-      <button onClick={log}>Upload Blog</button>
-
+      <Button onClick={log}>Upload Blog</Button>
     </div>
   )
 }

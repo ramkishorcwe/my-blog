@@ -1,12 +1,12 @@
 import React from 'react'
-import Image from '../utils/image'
-import Button from '../utils/button'
+import Image from '../../utils/image'
+import Button from '../../utils/button'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import Card from 'antd/es/card/Card'
 import HTMLReactParser from 'html-react-parser/lib/index'
-import envConfig from '../../environmentConfig'
+import envConfig from '../../../environmentConfig'
 import { useSelector } from 'react-redux'
-import blogConfig from '../../appwrite/blog'
+import blogConfig from '../../../appwrite/blog'
 
 const Blog = (props) => {
   const loginUser = useSelector((store) => {

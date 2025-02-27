@@ -4,8 +4,8 @@ import Login from "./login/login";
 import Register from "./register/register";
 import Home from "./home/home";
 import Image from "./utils/image";
-import Blog from "./blogs-list/blogs";
-import CreateBlog from "./create-blog/create-blog";
+import Blog from "./blog/blogs-list/blogs";
+import CreateBlog from "./blog/create-blog/create-blog";
 import AboutUs from "./about-us/about-us";
 // import RouteSetup from "./route/route";
 
