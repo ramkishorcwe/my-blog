@@ -10,7 +10,7 @@ const Footer = () => {
     position: 'fixed',
     zIndex: '1000',
     bottom: '0',
-    width: '100%',
+    width: '97%',
     fontSize: '14px',
   };
 
