@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 const Header = () => {
   const [userLoginStatus, setUserLoginStatus] = useState();
-  const [theme, setTheme] = useState(true); //todo system se 
+  const [theme, setTheme] = useState(true); //todo system se
   const loginUser = useSelector((state) => state.authState.userData)
   const navigate = useNavigate();
 
@@ -43,6 +43,7 @@ const Header = () => {
 
   const navStyle = {
     display: 'flex',
+    alignItems: "center",
     gap: '20px',
   };
 
@@ -125,7 +126,7 @@ const Header = () => {
             onMouseOver={(e) => (e.target.style.color = navLinkHover.color)}
             onMouseOut={(e) => (e.target.style.color = navLinkStyle.color)}
           >
-            Articles
+            Create Blog
           </Link>
           <Link
             to="/about-us"

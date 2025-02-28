@@ -7,12 +7,14 @@ import HTMLReactParser from 'html-react-parser/lib/index'
 import envConfig from '../../../environmentConfig'
 import { useSelector } from 'react-redux'
 import blogConfig from '../../../appwrite/blog'
+import {useNavigate} from "react-router";
 
 const Blog = (props) => {
   const loginUser = useSelector((store) => {
     return store.authState.userData
   });
   const imageUrl = envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage);
+  const navigate = useNavigate();
 
   // imagesrc = envConfig.bucketImageBaseUrl
   const deleteBlog = (id) => {
@@ -25,6 +27,9 @@ const Blog = (props) => {
   }
   const editBlog = (data) => {
     console.log(data)
+    navigate("/create-blog", {state:{
+        data
+      }});
   }
   return (
     // <Card>

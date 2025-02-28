@@ -5,21 +5,29 @@ import envObj from '../../../environmentConfig'
 import bucket from '../../../appwrite/bucket';
 import blog from '../../../appwrite/blog';
 import {useSelector} from 'react-redux';
-import {useNavigate} from 'react-router';
+import {useLocation, useNavigate} from 'react-router';
 import {UploadOutlined} from '@ant-design/icons';
 
 
 const CreateBlog = ({name, control, label, defaultValue = ""}) => {
     const [uploadImageDetail, setUploadImageDetail] = useState(null);
-    const [description, setDescription] = useState();
-    const [title, setTitle] = useState();
+    const [description, setDescription] = useState("");
+    const [title, setTitle] = useState("");
     const loginUserId = useSelector((store) => store.authState)
     const imgId = useRef(null)
     const editorRef = useRef(null);
     const navigate = useNavigate();
+    const location = useLocation();
+    console.log("location", location)
 
     useEffect(() => {
         console.log("loginUserId", loginUserId)
+        if(location&& location.state&&location.state.data.$id){
+            imgId.current = location.state.data.featuredImage;
+            setTitle(location.state.data.title)
+            setDescription(location.state.data.content)
+            setUploadImageDetail(location.state.data.featuredImage)
+        }
         return () => {
             // console.log(uploadImageDetail.$id, title, loginUserId)
             if (imgId.current && imgId.current.$id) {
@@ -98,16 +106,24 @@ const CreateBlog = ({name, control, label, defaultValue = ""}) => {
                          title={<UploadOutlined/>}/>
                 </label>
                 <label htmlFor='title'>Title
-                  <Input id='title' name='title' placeholder='Enter Title' type='text'
+                  <Input id='title' name='title'  value={title??""} placeholder='Enter Title' type='text'
                          onChange={(e) => setTitle(e.target.value)}/>
                 </label>
               </Card>
 
-              {uploadImageDetail && <Card>
+              {/*{uploadImageDetail && <Card>*/}
+              {/*  <Image*/}
+              {/*      width={600}*/}
+              {/*      height={270}*/}
+              {/*      src={envObj.bucketImageBaseUrl.replace("imageId", uploadImageDetail.$id)}*/}
+              {/*      alt='...'*/}
+              {/*  />*/}
+              {/*</Card>}*/}
+              {imgId.current && <Card>
                 <Image
                     width={600}
                     height={270}
-                    src={envObj.bucketImageBaseUrl.replace("imageId", uploadImageDetail.$id)}
+                    src={envObj.bucketImageBaseUrl.replace("imageId", imgId.current)}
                     alt='...'
                 />
               </Card>}
@@ -160,8 +176,8 @@ const CreateBlog = ({name, control, label, defaultValue = ""}) => {
                         "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
                     content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
                   }}
-                  initialValue=""
-                  style={{maxWidth: 600}}
+                  initialValue={description??""}
+                  // style={{maxWidth: 600}}
                   onFocusOut={onChange}
               />
               <Button onClick={log}>Upload Blog</Button>
