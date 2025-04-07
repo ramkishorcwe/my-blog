@@ -39,7 +39,7 @@ const Register = ({ children }) => {
       <h1 className='main-heading'>Register</h1>
       <Card>
         {loader ? "Loading..." : <form onSubmit={handleSubmit(onSubmit)}>
-          <Input  {...{ type: 'email', label: 'Email', className: 'input', name: 'email', register: register }} />
+          <Input  {...{ type: 'emalil', label: 'Email', className: 'input', name: 'email', register: register }} />
           <Input {...{ type: 'password', label: 'Password', className: 'input', name: 'password', register: register }} />
           <Input {...{ type: 'text', label: 'Name', className: 'input', name: 'name', register: register }} />
           {errors.exampleRequired && <span>This field is required</span>}
