@@ -7,7 +7,8 @@ import HTMLReactParser from 'html-react-parser/lib/index'
 import envConfig from '../../../environmentConfig'
 import { useSelector } from 'react-redux'
 import blogConfig from '../../../appwrite/blog'
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
+
 
 const Blog = (props) => {
   const loginUser = useSelector((store) => {
@@ -15,6 +16,7 @@ const Blog = (props) => {
   });
   const imageUrl = envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage);
   const navigate = useNavigate();
+
 
   // imagesrc = envConfig.bucketImageBaseUrl
   const deleteBlog = (id) => {
@@ -27,9 +29,11 @@ const Blog = (props) => {
   }
   const editBlog = (data) => {
     console.log(data)
-    navigate("/create-blog", {state:{
+    navigate("/create-blog", {
+      state: {
         data
-      }});
+      }
+    });
   }
   return (
     // <Card>
@@ -48,6 +52,7 @@ const Blog = (props) => {
       style={{ width: 300, padding: "unset", margin: "unset" }}
       cover={<Image {...{ src: imageUrl, alt: "...", style: { width: 300, height: 180 } }} />}
       key={props.featuredImage}
+      onClick={() => { navigate(`/${props.$id}`, { state: props }) }}
     >
       <h4 style={{ padding: "unset", margin: "unset" }}>{props.title}</h4>
       {HTMLReactParser(props.content)}
