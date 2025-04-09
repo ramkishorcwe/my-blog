@@ -6,6 +6,8 @@ import Logo from '../utils/logo';
 import { LoginOutlined, MoonFilled, SunFilled, UserOutlined } from '@ant-design/icons';
 import authService from '../../appwrite/auth'
 import { Link } from 'react-router';
+import { message } from 'antd'
+;
 import { useSelector } from 'react-redux';
 //
 //
@@ -171,16 +173,35 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 
-export default function AccountMenu() {
+export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-    const [userLoginStatus, setUserLoginStatus] = useState();
+  const userStatus = useSelector((store)=>store.authState.status)
+  const [userLoginStatus, setUserLoginStatus] = useState(userStatus);
+    const navigate = useNavigate()
   const open = Boolean(anchorEl);
+
+useEffect(()=>{
+  setUserLoginStatus(userStatus)
+},[userStatus])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const logoutBtnClick = async ()=>{
+    console.log("logout button called ")
+    try {
+      const resp = await authService.logout()
+      console.log(resp)
+      handleClose()
+      message.success("Logout Success");
+      navigate("/login");
+    }catch (e) {
+      message.error(e.message)
+    }
+  }
   return (
       <React.Fragment>
         {/*<Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', color: "black" }}>*/}
@@ -263,12 +284,20 @@ export default function AccountMenu() {
             </ListItemIcon>
             Settings
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          {userLoginStatus?<MenuItem onClick={logoutBtnClick}>
             <ListItemIcon>
-              <Logout fontSize="small" onClick={()=>{authService.logout()}}/>
+              <Logout fontSize="small"/>
+              <Typography sx={{marginLeft: 2}}>
+                Logout
+              </Typography>
             </ListItemIcon>
-            {userLoginStatus ? "Login" : "Logout"}
-          </MenuItem>
+          </MenuItem>:<MenuItem onClick={()=>{navigate("/login")}}>
+            <ListItemIcon>
+              <LoginOutlined fontSize="small"/><Typography sx={{marginLeft: 2}}>
+              Login
+            </Typography>
+            </ListItemIcon>
+          </MenuItem>}
         </Menu>
       </React.Fragment>
   );
