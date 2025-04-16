@@ -205,7 +205,7 @@ useEffect(()=>{
   return (
       <React.Fragment>
         {/*<Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', color: "black" }}>*/}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' , color: "black" }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' , color: "black" , backgroundColor: '#636B74' }}>
           <Typography component={Link} to="/" sx={{ minWidth: 100 }}>
             <Logo />
           </Typography>
@@ -213,7 +213,7 @@ useEffect(()=>{
             <Typography component={Link} to="/" sx={{ minWidth: 100, p: 2, color: "black", textDecoration: 'none' }}>Blogs</Typography>
             <Typography component={Link} to="/create-blog" sx={{ minWidth: 100, p: 2, color: "black", textDecoration: 'none' }}>Create Blog</Typography>
             <Typography component={Link} to="/about-us" sx={{ minWidth: 100, p: 2, color: "black", textDecoration: 'none' }}>About</Typography>
-            <Typography component={Link} to="/login" sx={{ minWidth: 100, p: 2, color: "black", textDecoration: 'none' }}>Login</Typography>
+            {/*<Typography component={Link} to="/login" sx={{ minWidth: 100, p: 2, color: "black", textDecoration: 'none' }}>Login</Typography>*/}
             <Tooltip title="Account settings">
               <IconButton
                   onClick={handleClick}
@@ -297,7 +297,8 @@ useEffect(()=>{
               Login
             </Typography>
             </ListItemIcon>
-          </MenuItem>}
+          </MenuItem>
+          }
         </Menu>
       </React.Fragment>
   );

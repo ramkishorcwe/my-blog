@@ -68,9 +68,11 @@ export default function Register(props) {
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
 
   const validateInputs = () => {
+    console.log(email,password)
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const name = document.getElementById('name');
+    console.log(email,password, name);
 
     let isValid = true;
 
@@ -105,10 +107,10 @@ export default function Register(props) {
   };
 
   const handleSubmit = (event) => {
-    if (nameError || emailError || passwordError) {
+    // if (nameError || emailError || passwordError) {
       event.preventDefault();
-      return;
-    }
+    //   return;
+    // }
     const data = new FormData(event.currentTarget);
     console.log({
       name: data.get('name'),
@@ -116,6 +118,7 @@ export default function Register(props) {
       email: data.get('email'),
       password: data.get('password'),
     });
+    console.log("Event ",event);
   };
 
   return (
