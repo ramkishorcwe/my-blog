@@ -9,6 +9,7 @@ const NewButton = (props) => {
   return (
     <>
       <Button
+        className={"bg-red p-5 rounded-md"}
         style={style ? style : { width: 70, height: 35 }}
         onClick={() => { data ? onClick(data) : onClick() }}
         {...tempProps}>{children ?? label ?? "Button"}
