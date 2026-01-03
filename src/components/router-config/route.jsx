@@ -80,7 +80,7 @@ import React, { Suspense, lazy } from "react";
 import { home, createBlog, about, login, register } from "./routerpath";
 import Header from "../header/header.jsx";
 import Footer from "../footer/footer.jsx"
-import BlogDescription from "../blog-description/blog-description.jsx";
+import BlogDescription from "../blog/blog-description/blog-description.jsx";
 // import { Footer } from "antd/es/layout/layout.js";
 // import { Header } from "antd/es/layout/layout.js";
 // import Loader from "../components/loader";
@@ -98,6 +98,7 @@ const RegisterComponent = importComponentByLazyLoading("Register");
 const CreateBlogComponent = importComponentByLazyLoading("CreateBlog");
 
 import { Spin } from "antd";
+import Project from "../project/project.jsx";
 // const RouteNotFoundComponent = lazy(() => import("../pages/pageNotFound"));
 
 const RouterConfig = () => {
@@ -110,7 +111,8 @@ const RouterConfig = () => {
             <Route path={home} element={<HomeComponent />} />
             <Route path={about} element={<AboutUsComponent />} />
             <Route path={createBlog} element={<CreateBlogComponent />} />
-            <Route path={"/:id"} element={<BlogDescription />} />
+            <Route path={"blog/:id"} element={<BlogDescription />} />
+            <Route path={"project/:id"} element={<Project />} />
             {/* <Route element={<ProtectedRoute />}>
               <Route path={homePath} element={<HomeComponent />} />
               <Route path={dashboard} element={<AboutUsComponent />} />

@@ -23,8 +23,21 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
     const location = useLocation();
     console.log("location", location)
 
+    if (!loginUserId?.userData?.$id) {
+        navigate('/login')
+    }
+
     useEffect(() => {
-        console.log("loginUserId", loginUserId);
+        (async () => {
+            console.log("loginUserId", loginUserId);
+            const tempImgId = localStorage.getItem("pendingBlogImage");
+            if (tempImgId) {
+                console.log(uploadImageDetail);
+                const result = await bucket.deleteImage(tempImgId)
+                localStorage.clear("pendingBlogImage")
+                console.log(result)
+            }
+        })();
         if (location && location.state && location.state.data.$id) {
             imgId.current = location.state.data.featuredImage;
             setTitle(location.state.data.title)
@@ -34,10 +47,12 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
 
         return async () => {
             try {
-                console.log(uploadImageDetail.$id, title, loginUserId)
-                if (imgId.current && imgId.current.$id) {
+                // console.log(uploadImageDetail.$id, title, loginUserId)
+                const tempImgId = localStorage.getItem("pendingBlogImage");
+                if (tempImgId) {
                     console.log(uploadImageDetail);
-                    const result = await bucket.deleteImage(imgId.current.$id)
+                    const result = await bucket.deleteImage(tempImgId);
+                    localStorage.clear("pendingBlogImage")
                     console.log(result)
                 }
             } catch (error) {
@@ -61,6 +76,7 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
                 const blog1 = await blog.createBlog(article)
                 console.log(blog1);
                 imgId.current = null
+                localStorage.clear('pendingBlogImage');
                 setUploadImageDetail(null)
                 navigate('/');
             } catch (error) {
@@ -82,7 +98,7 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
     }
     const uploadFile = async (e) => {
         try {
-            if (!loginUserId?.data?.$id) {
+            if (!loginUserId?.userData?.$id) {
                 throw new Error("Please login first to upload Image!");
             }
 
@@ -95,13 +111,18 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
                 // update
                 const updateImage = await bucket.updateImage(uploadImageDetail.$id, file);
                 imgId.current = updateImage
+                // 🔐 persist reference
+                localStorage.setItem("pendingBlogImage", updateImage.$id);
                 setUploadImageDetail(updateImage);
                 // toast.success("image update success!");
             } else {
                 const image = await bucket.addImage(file);
                 imgId.current = image;
+                // 🔐 persist reference
+                localStorage.setItem("pendingBlogImage", image.$id);
                 setUploadImageDetail(image);
                 // toast.success("success upload");
+
             }
         } catch (error) {
             console.error(error.message);
@@ -127,22 +148,22 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
                         </label>
                     </Card>
 
-                    {/*{uploadImageDetail && <Card>*/}
-                    {/*  <Image*/}
-                    {/*      width={600}*/}
-                    {/*      height={270}*/}
-                    {/*      src={envObj.bucketImageBaseUrl.replace("imageId", uploadImageDetail.$id)}*/}
-                    {/*      alt='...'*/}
-                    {/*  />*/}
-                    {/*</Card>}*/}
-                    {imgId.current && <Card>
+                    {uploadImageDetail?.$id && <Card>
                         <Image
                             width={600}
                             height={270}
-                            src={envObj.bucketImageBaseUrl.replace("imageId", imgId.current)}
+                            src={envObj.bucketImageBaseUrl.replace("imageId", uploadImageDetail?.$id)}
                             alt='...'
                         />
                     </Card>}
+                    {/* {<Card>
+                        <Image
+                            width={600}
+                            height={270}
+                            src={uploadImageDetail?.id ? envObj.bucketImageBaseUrl.replace("imageId", uploadImageDetail?.id) : ''}
+                            alt='...'
+                        />
+                    </Card>} */}
                 </div>
 
                 <Card>

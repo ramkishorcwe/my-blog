@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import Container from "../utils/container";
 import { login as authLogin } from '../../store/auth-reducer'
 import authService from '../../appwrite/auth'
-import { Card, Flex } from "antd";
+import { Card, Flex, message } from "antd";
 import envConfig from '../../environmentConfig'
 import { EyeFilled, EyeInvisibleOutlined, HomeFilled } from "@ant-design/icons";
 import OAuthLogin from "./oauth-login";
@@ -16,6 +16,7 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
   // const userAuth = useSelector((store) => store.authState.status);
   const [isShowPassword, setIsShowPassword] = useState(true);
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,6 +33,7 @@ const Login = () => {
         navigate('/')
       }
     } catch (error) {
+      messageApi.error(error.message)
       console.log(error.message)
     }
   }
@@ -42,6 +44,7 @@ const Login = () => {
         navigate('/')
       }
     } catch (error) {
+      messageApi.error(error.message)
     }
   }
   useEffect(() => {
@@ -53,6 +56,7 @@ const Login = () => {
 
   return (<>
     <Card className="container">
+      {contextHolder}
       <h1 className="background-text">Welcome to Our Blog</h1>
       <Card className="below-container" justify={"center"} gap={40}>
         <Flex>

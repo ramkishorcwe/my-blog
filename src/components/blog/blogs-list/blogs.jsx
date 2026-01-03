@@ -76,7 +76,7 @@ const BlogCard = (props) => {
         <Card sx={{ minWidth: 300 }}
             key={`${props.$id}${props.title}`}
             onClick={() => {
-                navigate(`/${props.$id}`, { state: props })
+                navigate(`blog/${props.$id}`, { state: props })
             }}>
             <CardActionArea>
                 <CardMedia
