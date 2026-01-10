@@ -1,8 +1,6 @@
-// import { Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
 import { Box, Typography } from "@mui/material";
-// import auth from '../../appwrite/auth';
 import blog from '../../../appwrite/blog';
 import HTMLReactParser from 'html-react-parser/lib/index';
 import envConfig from '../../../environmentConfig'
@@ -22,7 +20,6 @@ const BlogDescription = () => {
   useEffect(() => {
     blog.getBlog(id).then((data) => {
       //TODO authorId = data.userId for edit and delete show
-      console.log(data)
       const url = envConfig.bucketImageBaseUrl.replace("imageId", data.featuredImage);
       const tempData = { ...data, imageUrl: url }
       setBlogData(tempData)

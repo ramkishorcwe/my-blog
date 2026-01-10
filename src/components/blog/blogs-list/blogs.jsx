@@ -29,6 +29,7 @@ const BlogCard = (props) => {
                 console.log(result)
             }
             messageApi.error("Blog Delete Successful!");
+            props.fetchData()
         } catch (error) {
             messageApi.error(error.message);
             console.log(error)

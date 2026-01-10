@@ -1,13 +1,13 @@
 import Blog from "../blog/blogs-list/blogs";
-import Button from "../utils/button";
 import '../../components/'
-import { PlusCircleOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import authService from '../../appwrite/auth'
 import database from '../../appwrite/blog'
 import { userStatus } from '../../store/auth-reducer'
+import { Select } from "antd";
+const { Option } = Select;
 
 const Home = () => {
   // const userAuth = useSelector((store) => store.authState.status);
@@ -29,7 +29,7 @@ const Home = () => {
   }
   const fetchData = async () => {
     try {
-      const blogList = await database.listBlog()
+      const blogList = await database.listBlog();
       setBlogsList(blogList.documents);
     } catch (error) {
       console.log(error)
@@ -41,19 +41,20 @@ const Home = () => {
   }, [])
   const createProps = (blog) => {
     return {
-      ...blog, key: blog.title
+      ...blog,
+      key: blog.title,
+      fetchData
     }
   }
-  const newBlog = () => {
-    navigate("/create-blog")
-  }
-
   return (
     <div className="header-footer-gap bg-cyan-950">
-      <div style={{ display: "flex", justifyContent: "space-between", marginLeft: 10 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginLeft: 10, alignItems: 'center' }}>
         <h1>My Blogs</h1>
         {/*todo apply filter */}
-        {/*<Button {...{ styles: { width: 100, height: 24 }, onClick: newBlog }} >{<PlusCircleOutlined />}</Button>*/}
+        <Select style={{ width: 150 }} defaultActiveFirstOption={true} defaultValue={'My Blogs'}>
+          <Option value="My Blogs">My Blogs</Option>
+          <Option value="Others Blogs">Others Blog</Option>
+        </Select>
       </div>
       <div style={{ display: "flex", flexWrap: 'wrap', justifyContent: "center", gap: 20 }}>
         {blogsList.map((blog) => <Blog key={blog.$id} {...createProps(blog)} />)}
