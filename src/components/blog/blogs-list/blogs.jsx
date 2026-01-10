@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
-
+import '../blog.css'
 
 const BlogCard = (props) => {
     const loginUser = useSelector((store) => {
@@ -73,52 +73,57 @@ const BlogCard = (props) => {
         //     </Button></>}
         //   {/* <Meta title={props.title} description="www.instagram.com" /> */}
         // </Card>
-        <Card sx={{ minWidth: 300 }}
+        <Card
+            className="plp-card"
             key={`${props.$id}${props.title}`}
             onClick={() => {
-                navigate(`blog/${props.$id}`, { state: props })
-            }}>
+                navigate(`blog/${props.$id}`, { state: props });
+            }}
+        >
             <CardActionArea>
                 <CardMedia
                     component="img"
-                    height="140"
+                    className="plp-image"
                     image={imageUrl}
-                    alt="Card Image"
+                    alt="Blog Image"
                 />
-                <CardContent>
-                    <div className='flex' style={{ display: 'flex' }}>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {props.title}
-                        </Typography>
-                        <CardActions>
-                            {loginUser?.$id === props.userId && <><Button {...{
-                                // style: { width: 60, height: 35 },
-                                onClick: editBlog,
-                                data: props
-                            }}>
-                                {<EditOutlined />}Edit
-                            </Button>
-                                <Button  {...{
-                                    // style: { width: 60, height: 35, color: 'red' },
-                                    onClick: deleteBlog,
-                                    data: props.$id,
-                                    name: "blogList",
-                                    className: "text-red"
-                                }}>
-                                    {<DeleteOutlined />} Delete
-                                </Button></>}
-                        </CardActions>
+
+                <CardContent className="plp-content">
+                    <div className="plp-header">
+                        <div className="plp-title">{props.title}</div>
+
+                        {loginUser?.$id === props.userId && (
+                            <div className="plp-actions">
+                                <Button
+                                    size="small"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        editBlog(props);
+                                    }}
+                                >
+                                    <EditOutlined />
+                                </Button>
+
+                                <Button
+                                    size="small"
+                                    color="error"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteBlog(props.$id);
+                                    }}
+                                >
+                                    <DeleteOutlined />
+                                </Button>
+                            </div>
+                        )}
                     </div>
 
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {/*Lizards are a widespread group of squamate reptiles, with over 6,000*/}
-                        {/*species, ranging across all continents except Antarctica*/}
+                    <div className="plp-description">
                         {HTMLReactParser(props.content)}
-                    </Typography>
+                    </div>
                 </CardContent>
             </CardActionArea>
         </Card>
-
     )
 }
 

@@ -75,9 +75,11 @@
 
 // Fresh Code
 
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import React, { Suspense, lazy } from "react";
+import { BrowserRouter, Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import React, { Suspense, lazy, useEffect } from "react";
 import { home, createBlog, about, login, register } from "./routerpath";
+import { Spin } from "antd";
+import Project from "../project/project.jsx";
 import Header from "../header/header.jsx";
 import Footer from "../footer/footer.jsx"
 import BlogDescription from "../blog/blog-description/blog-description.jsx";
@@ -97,11 +99,10 @@ const AboutUsComponent = importComponentByLazyLoading("AboutUs");
 const RegisterComponent = importComponentByLazyLoading("Register");
 const CreateBlogComponent = importComponentByLazyLoading("CreateBlog");
 
-import { Spin } from "antd";
-import Project from "../project/project.jsx";
 // const RouteNotFoundComponent = lazy(() => import("../pages/pageNotFound"));
 
 const RouterConfig = () => {
+
   return (
     <Suspense fallback={<Spin />}>
       <BrowserRouter>

@@ -179,6 +179,10 @@ export default function Header() {
   const [userLoginStatus, setUserLoginStatus] = useState(userStatus);
   const navigate = useNavigate()
   const open = Boolean(anchorEl);
+  const loginUserId = useSelector((store) => store.authState)
+  if (!loginUserId?.userData?.$id) {
+    navigate('/login')
+  }
 
   useEffect(() => {
     setUserLoginStatus(userStatus)

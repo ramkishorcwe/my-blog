@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import blog from '../../../appwrite/blog';
 import HTMLReactParser from 'html-react-parser/lib/index';
 
+
 const BlogDescription = () => {
   const location = useLocation();
   const path = location.pathname.split("/")
@@ -25,17 +26,28 @@ const BlogDescription = () => {
   }, []);
 
   return (
-    <Box sx={{ bgcolor: "#f5f5f5", p: 2, borderRadius: 2, maxWidth: "90%", margin: 'auto' }}>
-      <Typography variant="h5" component="h1" sx={{ fontWeight: 600 }}>
-        {blogData && blogData.title}
-      </Typography>
-      <Box>
-        <Typography>
+    <Box className="blog-card">
+      <img
+        src={blogData?.imageUrl}
+        alt="blog"
+        className="blog-image"
+      />
+
+      <Box className="blog-content">
+        <Typography className="blog-title">
+          {blogData?.title}
+        </Typography>
+
+        <Typography className="blog-author">
+          By {blogData?.author || "Admin"}
+        </Typography>
+
+        <Typography className="blog-description">
           {blogData && HTMLReactParser(blogData?.content)}
         </Typography>
       </Box>
-
     </Box>
+
   )
 }
 
