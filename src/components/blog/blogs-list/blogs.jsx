@@ -27,7 +27,7 @@ const BlogCard = (props) => {
 
 
     // imagesrc = envConfig.bucketImageBaseUrl
-    const deleteBlog = (id) => {
+    const deleteMyBlog = (id) => {
         try {
             blogConfig.deleteBlog(id)
             alert("Blog Delete Successful!")
@@ -35,7 +35,7 @@ const BlogCard = (props) => {
             console.log(error)
         }
     }
-    const editBlog = (data) => {
+    const editMyBlog = (data) => {
         console.log(data)
         navigate("/create-blog", {
             state: {
@@ -98,7 +98,7 @@ const BlogCard = (props) => {
                                     size="small"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        editBlog(props);
+                                        editMyBlog(props);
                                     }}
                                 >
                                     <EditOutlined />
@@ -109,7 +109,7 @@ const BlogCard = (props) => {
                                     color="error"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        deleteBlog(props.$id);
+                                        deleteMyBlog(props.$id);
                                     }}
                                 >
                                     <DeleteOutlined />

@@ -5,6 +5,8 @@ import { Box, Typography } from "@mui/material";
 // import auth from '../../appwrite/auth';
 import blog from '../../../appwrite/blog';
 import HTMLReactParser from 'html-react-parser/lib/index';
+import envConfig from '../../../environmentConfig'
+import CardMedia from '@mui/material/CardMedia';
 
 
 const BlogDescription = () => {
@@ -15,38 +17,45 @@ const BlogDescription = () => {
   console.log(id)
   const state = useLocation();
   console.log(state.title)
+  // const imageUrlRef = envConfig.bucketImageBaseUrl.replace("imageId", props.featuredImage);
 
   useEffect(() => {
     blog.getBlog(id).then((data) => {
+      //TODO authorId = data.userId for edit and delete show
       console.log(data)
-      setBlogData(data)
+      const url = envConfig.bucketImageBaseUrl.replace("imageId", data.featuredImage);
+      const tempData = { ...data, imageUrl: url }
+      setBlogData(tempData)
     }).catch((error) => {
       console.log(error)
     })
   }, []);
 
   return (
-    <Box className="blog-card">
-      <img
-        src={blogData?.imageUrl}
-        alt="blog"
-        className="blog-image"
-      />
+    <div>
+      <Box className="blog-card">
+        <CardMedia
+          component="img"
+          className="plp-image"
+          image={blogData?.imageUrl}
+          alt="Blog Image"
+        />
 
-      <Box className="blog-content">
-        <Typography className="blog-title">
-          {blogData?.title}
-        </Typography>
+        <Box className="blog-content">
+          <Typography className="blog-title">
+            {blogData?.title}
+          </Typography>
 
-        <Typography className="blog-author">
-          By {blogData?.author || "Admin"}
-        </Typography>
+          <Typography className="blog-author">
+            By {blogData?.author || "Admin"}
+          </Typography>
 
-        <Typography className="blog-description">
-          {blogData && HTMLReactParser(blogData?.content)}
-        </Typography>
+          <Typography className="blog-description">
+            {blogData && HTMLReactParser(blogData?.content)}
+          </Typography>
+        </Box>
       </Box>
-    </Box>
+    </div>
 
   )
 }
