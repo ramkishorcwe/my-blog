@@ -52,6 +52,7 @@ const Home = () => {
     <div className="header-footer-gap bg-cyan-950">
       <div style={{ display: "flex", justifyContent: "space-between", marginLeft: 10 }}>
         <h1>My Blogs</h1>
+        {/*todo apply filter */}
         {/*<Button {...{ styles: { width: 100, height: 24 }, onClick: newBlog }} >{<PlusCircleOutlined />}</Button>*/}
       </div>
       <div style={{ display: "flex", flexWrap: 'wrap', justifyContent: "center", gap: 20 }}>
