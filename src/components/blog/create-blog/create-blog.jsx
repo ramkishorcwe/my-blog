@@ -7,6 +7,7 @@ import blog from '../../../appwrite/blog';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { UploadOutlined } from '@ant-design/icons';
+import Blog from '../../../appwrite/blog'
 
 
 
@@ -37,13 +38,15 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
                 localStorage.clear("pendingBlogImage")
                 console.log(result)
             }
+            if (location && location.state && location.state.id) {
+                const data = await Blog.getBlog(location.state.id)
+                imgId.current = data.featuredImage;
+                setTitle(data.title)
+                setDescription(data.content)
+                setUploadImageDetail({ $id: data.featuredImage })
+            }
         })();
-        if (location && location.state && location.state.data.$id) {
-            imgId.current = location.state.data.featuredImage;
-            setTitle(location.state.data.title)
-            setDescription(location.state.data.content)
-            setUploadImageDetail(location.state.data.featuredImage)
-        }
+
 
         return async () => {
             try {

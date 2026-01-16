@@ -39,7 +39,7 @@ const BlogCard = (props) => {
         console.log(data)
         navigate("/create-blog", {
             state: {
-                data
+                id: data.$id
             }
         });
     }

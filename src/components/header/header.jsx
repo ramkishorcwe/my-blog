@@ -177,6 +177,7 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const userStatus = useSelector((store) => store.authState.status)
   const [userLoginStatus, setUserLoginStatus] = useState(userStatus);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const navigate = useNavigate()
   const open = Boolean(anchorEl);
   const loginUserId = useSelector((store) => store.authState)
@@ -186,6 +187,17 @@ export default function Header() {
 
   useEffect(() => {
     setUserLoginStatus(userStatus)
+
+    const on = () => setIsOnline(true);
+    const off = () => setIsOnline(false);
+    window.addEventListener("online", on);
+    window.addEventListener("offline", off);
+
+    return () => {
+      window.removeEventListener("online", on);
+      window.removeEventListener("offline", off);
+    };
+
   }, [userStatus])
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -212,6 +224,7 @@ export default function Header() {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', color: "black", backgroundColor: '#636B74' }}>
         <Typography component={Link} to="/" sx={{ minWidth: 100 }}>
           <Logo />
+          <span style={{ background: isOnline ? 'green' : 'red', width: 2, height: 2 }} className={isOnline ? 'online' : 'offline'} />
         </Typography>
         <Box component="section" sx={{ pt: 2 }}>
           <Typography component={Link} to="/" sx={{ minWidth: 100, p: 2, color: "black", textDecoration: 'none' }}>Blogs</Typography>
