@@ -112,13 +112,17 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
             console.log(uploadImageDetail)
             if (uploadImageDetail !== null) {
                 // update
-                const updateImage = await bucket.updateImage(uploadImageDetail.$id, file);
-                imgId.current = updateImage
-                // 🔐 persist reference
-                localStorage.setItem("pendingBlogImage", updateImage.$id);
-                setUploadImageDetail(updateImage);
-                // toast.success("image update success!");
-            } else {
+                const verifyImage = await bucket.fetchImage(uploadImageDetail.$id)
+                if (verifyImage) {
+                    const updateImage = await bucket.updateImage(uploadImageDetail.$id, file);
+                    imgId.current = updateImage
+                    // 🔐 persist reference
+                    localStorage.setItem("pendingBlogImage", updateImage.$id);
+                    setUploadImageDetail(updateImage);
+                    // toast.success("image update success!");
+                    return
+                }
+            }
                 const image = await bucket.addImage(file);
                 imgId.current = image;
                 // 🔐 persist reference
@@ -126,7 +130,6 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
                 setUploadImageDetail(image);
                 // toast.success("success upload");
 
-            }
         } catch (error) {
             console.error(error.message);
             // graceful UI handling
