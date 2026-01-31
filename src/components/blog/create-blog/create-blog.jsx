@@ -8,10 +8,11 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { UploadOutlined } from '@ant-design/icons';
 import Blog from '../../../appwrite/blog'
+// import {ColorSystemOptions as toast} from "@mui/material/esm/styles/createThemeWithVars";
 
 
 
-const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
+const CreateBlog = () => {
     const [uploadImageDetail, setUploadImageDetail] = useState(null);
     const [description, setDescription] = useState("");
     const [title, setTitle] = useState("");
@@ -63,6 +64,7 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
             }
         }
     }, [])
+
     const log = async () => {
         if (uploadImageDetail?.$id) {
             if (editorRef.current) {
@@ -76,7 +78,11 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
                 userId: loginUserId.userData.$id
             }
             try {
-                const blog1 = await blog.createBlog(article)
+                let blog1;
+                if (location && location.state && location.state.id)
+                    blog1 = await blog.updateBlog(location.state.id, article)
+                else
+                    blog1 = await blog.createBlog(article)
                 console.log(blog1);
                 imgId.current = null
                 localStorage.clear('pendingBlogImage');
@@ -112,23 +118,46 @@ const CreateBlog = ({ name, control, label, defaultValue = "" }) => {
             console.log(uploadImageDetail)
             if (uploadImageDetail !== null) {
                 // update
-                const verifyImage = await bucket.fetchImage(uploadImageDetail.$id)
-                if (verifyImage) {
-                    const updateImage = await bucket.updateImage(uploadImageDetail.$id, file);
-                    imgId.current = updateImage
+                // const verifyImage = await bucket.fetchImage(uploadImageDetail.$id)
+                if (uploadImageDetail?.$id) {
+                    console.log("updating image");
+
+                    // 1️⃣ Upload new image FIRST
+                    const newImage = await bucket.addImage(file);
+
+                    // 2️⃣ Only after success → delete old image
+                    try {
+                        await bucket.deleteImage(uploadImageDetail.$id);
+                    } catch (err) {
+                        console.warn("Old image already deleted");
+                    }
+
+                    // 3️⃣ Persist new image
+                    imgId.current = newImage.$id;
+                    localStorage.setItem("pendingBlogImage", newImage.$id);
+                    setUploadImageDetail(newImage);
+
+                    messageApi.success("Image updated successfully");
+
+                } else {
+                    console.log("create image");
+                    const image = await bucket.addImage(file);
+                    imgId.current = image;
                     // 🔐 persist reference
-                    localStorage.setItem("pendingBlogImage", updateImage.$id);
-                    setUploadImageDetail(updateImage);
-                    // toast.success("image update success!");
-                    return
+                    localStorage.setItem("pendingBlogImage", image.$id);
+                    setUploadImageDetail(image);
+                    messageApi.success("success update");
+                    //todo add image id on blog
                 }
+                return
             }
-                const image = await bucket.addImage(file);
-                imgId.current = image;
-                // 🔐 persist reference
-                localStorage.setItem("pendingBlogImage", image.$id);
-                setUploadImageDetail(image);
-                // toast.success("success upload");
+            console.log("create image");
+            const image = await bucket.addImage(file);
+            imgId.current = image;
+            // 🔐 persist reference
+            localStorage.setItem("pendingBlogImage", image.$id);
+            setUploadImageDetail(image);
+            messageApi.success("success upload");
 
         } catch (error) {
             console.error(error.message);
