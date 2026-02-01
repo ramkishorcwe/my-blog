@@ -72,7 +72,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
-
+@import "tailwindcss";
 .body {
   margin: 0px;
   padding: 0px;
