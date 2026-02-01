@@ -58,8 +58,12 @@ const BlogCard = (props) => {
                         component="img"
                         className="plp-image"
                         image={imageUrl}
-                        alt="Blog Image"
+                        alt=""
+                        onError={(e) => {
+                            e.target.src = "/public/vite.svg"; // add any local placeholder
+                        }}
                     />
+
 
                     <CardContent className="plp-content">
                         <div className="plp-header">

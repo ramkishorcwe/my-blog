@@ -1,29 +1,39 @@
-/* PLP CARD */
+/* =========================
+   BLOG CARD – FINAL FIX
+   ========================= */
+
 .plp-card {
   width: 100%;
-  max-width: 320px;
-  border-radius: 14px;
+  max-width: 360px;
+  background: #f8fafc; /* 👈 soft off-white (Tailwind slate-50) */
+  border-radius: 8px;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.plp-card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* transition: transform 0.2s, box-shadow 0.2s; */
 }
 
-.plp-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-}
-
-/* IMAGE */
+/* IMAGE WRAPPER */
 .plp-image {
-  height: 180px;
+  width: 100%;
+  height: 160px; /* 👈 FIXED: no huge empty area */
   object-fit: cover;
+  background-color: #e5e7eb;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
 }
 
 /* CONTENT */
 .plp-content {
-  padding: 14px;
+  padding: 12px 14px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* TITLE + ACTIONS */
+/* HEADER */
 .plp-header {
   display: flex;
   justify-content: space-between;
@@ -32,34 +42,61 @@
 }
 
 .plp-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
-  color: #222;
-  line-height: 1.3;
-  flex: 1;
-}
-
-/* ACTION BUTTONS */
-.plp-actions button {
-  min-width: unset;
-  padding: 4px;
-}
-
-/* DESCRIPTION */
-.plp-description {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #555;
-  line-height: 1.6;
+  color: #0f172a;
+  line-height: 1.4;
 
   display: -webkit-box;
-  -webkit-line-clamp: 3;   /* 👈 PLP effect */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* REMOVE ALL HTML FORMATTING INSIDE CONTENT */
-.plp-description * {
-  all: unset;
-  display: inline;
+/* ACTION ICONS */
+.plp-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.plp-actions button {
+  min-width: 26px !important;
+  width: 26px;
+  height: 26px;
+  padding: 0 !important;
+}
+
+/* DESCRIPTION */
+.plp-description {
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.5;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.plp-description p {
+  margin: 0;
+}
+
+/* =========================
+   PAGE GRID FIX
+   ========================= */
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 16px 0;
+}
+
+/* =========================
+   DARK BACKGROUND SUPPORT
+   ========================= */
+
+body {
+  background-color: #083344; /* your teal background */
 }
