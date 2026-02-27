@@ -17,7 +17,7 @@ const projects = [
     description:
       "Youtube-like video platform with Gemini AI integration for content search and recommendations.",
     tech: ["React", "Gemini AI", "Tailwind", "tmdb API"],
-    live: "https://stream-genie-git-main-ram-kishors-projects.vercel.app/",
+    live: "https://my-blog-zeta-liard.vercel.app/",
     github: "https://github.com/ramkishorcwe/StreamGenie",
   },
   {
