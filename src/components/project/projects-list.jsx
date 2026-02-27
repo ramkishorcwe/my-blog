@@ -40,7 +40,7 @@ const projects = [
 
 export default function ProjectsListPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 px-6 py-16 text-white">
+    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-800 px-6 py-16 text-white">
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

@@ -138,10 +138,10 @@ const BlogCard = (props) => {
       {contextHolder}
 
       <div
-        className="bg-gradient-to-br from-slate-900 to-slate-800 
+        className="bg-linear-to-br from-slate-900 to-slate-800 
                            border border-slate-700 rounded-2xl 
                            shadow-lg hover:scale-105 transition duration-300 
-                           w-[350px] overflow-hidden cursor-pointer"
+                           w-87.5 overflow-hidden cursor-pointer"
         onClick={() => navigate(`/blog/${props.$id}`, { state: props })}
       >
         {/* Image */}
@@ -205,3 +205,5 @@ const BlogCard = (props) => {
     </>
   );
 };
+
+export default BlogCard;
