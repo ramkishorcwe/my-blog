@@ -435,6 +435,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Code, Rocket, Users, Briefcase } from "lucide-react";
+import { Mail, Phone, Linkedin, Github } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function About() {
   return (
@@ -449,14 +451,67 @@ export default function About() {
           <h1 className="text-4xl font-bold sm:text-5xl">Ram Kishor</h1>
 
           <p className="mx-auto max-w-2xl text-gray-400 text-lg">
-            Frontend Developer with 2+ years of experience building scalable
+            Frontend Developer with 3+ years of experience building scalable
             React applications with clean architecture and modern UI systems.
           </p>
         </section>
 
+        {/* CONTACT BOXES */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10">
+          {[
+            {
+              icon: <Phone className="h-5 w-5" />,
+              label: "+91 8868988610",
+              link: "tel:+918868988610",
+            },
+            {
+              icon: <Mail className="h-5 w-5" />,
+              label: "iamrkishoryadav@gmail.com",
+              link: "mailto:iamrkishoryadav@gmail.com",
+            },
+            {
+              icon: <Linkedin className="h-5 w-5" />,
+              label: "LinkedIn",
+              link: "https://www.linkedin.com/in/ram-kishor-47734a206",
+            },
+            {
+              icon: <Github className="h-5 w-5" />,
+              label: "GitHub",
+              link: "https://github.com/ramkishorcwe",
+            },
+          ].map((item, index) => (
+            <motion.a
+              key={index}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                type: "spring",
+                stiffness: 80,
+                delay: index * 0.15,
+              }}
+              viewport={{ once: true }}
+              className="bg-linear-to-br from-slate-900 to-slate-800 
+                 border border-slate-700 
+                 rounded-2xl p-6 
+                 flex flex-col items-center justify-center 
+                 text-gray-300 hover:text-white 
+                 hover:scale-105 
+                 transition duration-300 
+                 shadow-lg"
+            >
+              <div className="mb-3">{item.icon}</div>
+              <span className="text-sm text-center">{item.label}</span>
+            </motion.a>
+          ))}
+        </section>
+        <Separator className="bg-slate-800" />
+
         {/* EXPERIENCE */}
         <section className="grid gap-6 md:grid-cols-2">
-          <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700">
+          <Card className="bg-linear-to-br from-slate-900 to-slate-800 border border-slate-700">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Briefcase className="h-5 w-5" />
@@ -476,7 +531,7 @@ export default function About() {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700">
+          <Card className="bg-linear-to-br from-slate-900 to-slate-800 border border-slate-700">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Rocket className="h-5 w-5" />
@@ -502,7 +557,7 @@ export default function About() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700">
+            <Card className="bg-linear-to-br from-slate-900 to-slate-800 border border-slate-700">
               <CardHeader>
                 <CardTitle>Komatsu</CardTitle>
               </CardHeader>
@@ -512,7 +567,7 @@ export default function About() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700">
+            <Card className="bg-linear-to-br from-slate-900 to-slate-800 border border-slate-700">
               <CardHeader>
                 <CardTitle>RCRMT NRW</CardTitle>
               </CardHeader>
@@ -522,7 +577,7 @@ export default function About() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700">
+            <Card className="bg-linear-to-br from-slate-900 to-slate-800 border border-slate-700">
               <CardHeader>
                 <CardTitle>WorkNest HRMS</CardTitle>
               </CardHeader>
@@ -568,7 +623,7 @@ export default function About() {
 
         {/* EDUCATION */}
         <section className="grid md:grid-cols-2 gap-6">
-          <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700">
+          <Card className="bg-linear-to-br from-slate-900 to-slate-800 border border-slate-700">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Users className="h-5 w-5" />
@@ -581,7 +636,7 @@ export default function About() {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700">
+          <Card className="bg-linear-to-br from-slate-900 to-slate-800 border border-slate-700">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
                 <Code className="h-5 w-5" />
