@@ -97,7 +97,7 @@ const BlogSkeleton = () => {
   return (
     <div
       className="bg-slate-800 border border-slate-700 
-                    rounded-2xl w-[350px] p-5 animate-pulse"
+                    rounded-2xl w-87.5 p-5 animate-pulse"
     >
       <div className="h-48 bg-slate-700 rounded-lg mb-4"></div>
 

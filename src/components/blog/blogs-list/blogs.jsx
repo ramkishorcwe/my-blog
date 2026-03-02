@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { message } from "antd";
 import bucket from "../../../appwrite/bucket";
 import "../blog.css";
-
+import { Button } from "antd";
 // const BlogCard = (props) => {
 //   const [messageApi, contextHolder] = message.useMessage();
 //   const loginUser = useSelector((store) => {
@@ -105,105 +105,107 @@ import "../blog.css";
 // export default BlogCard;
 
 const BlogCard = (props) => {
-  const [messageApi, contextHolder] = message.useMessage();
-  const loginUser = useSelector((store) => store.authState.userData);
-  const navigate = useNavigate();
+    const [messageApi, contextHolder] = message.useMessage();
+    const loginUser = useSelector((store) => store.authState.userData);
+    const navigate = useNavigate();
 
-  const imageUrl = envConfig.bucketImageBaseUrl.replace(
-    "imageId",
-    props.featuredImage,
-  );
+    const imageUrl = envConfig.bucketImageBaseUrl.replace(
+        "imageId",
+        props.featuredImage,
+    );
 
-  const deleteMyBlog = async (id, imgId) => {
-    try {
-      await blogConfig.deleteBlog(id);
-      if (imgId) {
-        await bucket.deleteImage(imgId);
-      }
-      messageApi.success("Blog Deleted Successfully!");
-      props.fetchData();
-    } catch (error) {
-      messageApi.error(error.message);
-    }
-  };
+    const deleteMyBlog = async (id, imgId) => {
+        try {
+            await blogConfig.deleteBlog(id);
+            if (imgId) {
+                await bucket.deleteImage(imgId);
+            }
+            messageApi.success("Blog Deleted Successfully!");
+            props.fetchData();
+        } catch (error) {
+            messageApi.error(error.message);
+        }
+    };
 
-  const editMyBlog = (data) => {
-    navigate("/create-blog", {
-      state: { id: data.$id },
-    });
-  };
+    const editMyBlog = (data) => {
+        navigate("/create-blog", {
+            state: { id: data.$id },
+        });
+    };
 
-  return (
-    <>
-      {contextHolder}
+    return (
+        <>
+            {contextHolder}
 
-      <div
-        className="bg-linear-to-br from-slate-900 to-slate-800 
+            <div
+                className="bg-linear-to-br from-slate-900 to-slate-800 
                            border border-slate-700 rounded-2xl 
                            shadow-lg hover:scale-105 transition duration-300 
                            w-87.5 overflow-hidden cursor-pointer"
-        onClick={() => navigate(`/blog/${props.$id}`, { state: props })}
-      >
-        {/* Image */}
-        <div className="h-48 overflow-hidden">
-          <img
-            src={imageUrl}
-            alt=""
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              e.target.src = "/vite.svg";
-            }}
-          />
-        </div>
+                onClick={() => navigate(`/blog/${props.$id}`)}
+            >
+                {/* Image */}
+                <div className="h-48 overflow-hidden">
+                    <img
+                        src={imageUrl}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                            e.target.src = "/vite.svg";
+                        }}
+                    />
+                </div>
 
-        {/* Content */}
-        <div className="p-5">
-          <div className="flex justify-between items-start">
-            <h3 className="text-xl font-semibold text-white">{props.title}</h3>
+                {/* Content */}
+                <div className="p-5">
+                    <div className="flex justify-between items-start">
+                        <h3 className="text-xl font-semibold text-white">{props.title}</h3>
 
-            {loginUser?.$id === props.userId && (
-              <div className="flex gap-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    editMyBlog(props);
-                  }}
-                  className="text-gray-400 hover:text-white"
-                >
-                  <EditOutlined />
-                </button>
+                        {loginUser?.$id === props.userId && (
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        editMyBlog(props);
+                                    }}
+                                    className="text-gray-400 hover:text-white"
+                                >
+                                    <EditOutlined />
+                                </button>
 
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteMyBlog(props.$id, props.featuredImage);
-                  }}
-                  className="text-red-400 hover:text-red-500"
-                >
-                  <DeleteOutlined />
-                </button>
-              </div>
-            )}
-          </div>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteMyBlog(props.$id, props.featuredImage);
+                                    }}
+                                    className="text-red-400 hover:text-red-500"
+                                >
+                                    <DeleteOutlined />
+                                </button>
+                            </div>
+                        )}
+                    </div>
 
-          <div className="text-gray-400 mt-3 line-clamp-3 text-sm">
-            {HTMLReactParser(props.content)}
-          </div>
+                    <div className="text-gray-400 mt-3 line-clamp-3 text-sm">
+                        {HTMLReactParser(props.content)}
+                    </div>
 
-          <div className="mt-5">
-            <button
-              className="border border-white text-white 
+                    <div className="mt-5">
+                        <Button
+                            // to={`/blog/${props.$id}`}
+                            onClick={() => navigate(`/blog/${props.$id}`)}
+                            className="border border-white text-white 
                                        px-4 py-2 rounded-lg 
                                        hover:bg-white hover:text-black 
                                        transition"
-            >
-              Read More
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+                        >
+                            Read More
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default BlogCard;
