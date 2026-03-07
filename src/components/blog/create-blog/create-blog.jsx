@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 import { Flex, Image, Input, Button, Card, message } from 'antd'
-import { UploadOutlined } from '@ant-design/icons'
+// import { UploadOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router'
-
 import envObj from '../../../environmentConfig'
 import bucket from '../../../appwrite/bucket'
 import blog from '../../../appwrite/blog'
 import Blog from '../../../appwrite/blog'
+
 
 const CreateBlog = () => {
     const [uploadImageDetail, setUploadImageDetail] = useState(null)
@@ -18,7 +18,6 @@ const CreateBlog = () => {
 
     const loginUserId = useSelector((store) => store.authState)
     const imgId = useRef(null)
-    const editorRef = useRef(null)
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -104,6 +103,11 @@ const CreateBlog = () => {
             status: 'true',
             title,
             userId: loginUserId.userData.$id,
+            authorName: loginUserId.userData.name || 'Admin',
+            authorAvtar: loginUserId.userData.avtar || null,
+            readingTime: Math.ceil(description.split(' ').length / 200),
+            summary: description.slice(0, 150) + '...',
+            tags: ['javascript']
         }
 
         try {
