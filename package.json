@@ -27,7 +27,7 @@
     "appwrite": "^16.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.29.2",
+    "framer-motion": "^12.34.0",
     "html-react-parser": "^5.1.18",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.563.0",
