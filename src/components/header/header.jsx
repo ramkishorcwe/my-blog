@@ -50,6 +50,7 @@ export default function Header() {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    navigate("/profile");
     setAnchorEl(null);
   };
 

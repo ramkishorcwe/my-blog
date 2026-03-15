@@ -7,6 +7,7 @@ import Header from "../header/header.jsx";
 import Footer from "../footer/footer.jsx"
 import BlogDescription from "../blog/blog-description/blog-description.jsx";
 import ProjectsListPage from '../project/projects-list.jsx'
+import ProfileComponent from "../user-profile/profile.jsx";
 const importComponentByLazyLoading = (componentName) => {
   return React.lazy(() =>
     import('../index.js').then((module) => ({ default: module[componentName] }))
@@ -34,6 +35,7 @@ const RouterConfig = () => {
             <Route path={createBlog} element={<CreateBlogComponent />} />
             <Route path={"blog/:id"} element={<BlogDescription />} />
             <Route path={"project/"} element={<ProjectsListPage />} />
+            <Route path={"profile/"} element={<ProfileComponent />} />
             <Route path={"project/:id"} element={<Project />} />
             {/* <Route element={<ProtectedRoute />}>
               <Route path={homePath} element={<HomeComponent />} />
