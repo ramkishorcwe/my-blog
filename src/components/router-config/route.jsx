@@ -25,7 +25,7 @@ const CreateBlogComponent = importComponentByLazyLoading("CreateBlog");
 const RouterConfig = () => {
 
   return (
-    <Suspense fallback={<Spin />}>
+    <Suspense fallback={renderLoader()}>
       <BrowserRouter>
         <Routes>
           <Route path={home} element={<><Header /><Outlet style={{ minHeight: "70vh" }} /><Footer /></>}>
@@ -53,6 +53,17 @@ const RouterConfig = () => {
 
 export default RouterConfig;
 
+// function ProtectedRoute({ children }) {
+//   const navigate = useNavigate();
+//   const isAuthenticated = false; // Replace with your authentication logic  
 
+
+function renderLoader() {
+  return (
+    <div className="flex items-center justify-center h-screen bg-[#020618]">
+      <Spin size="large" />
+    </div>
+  )
+}
 
 

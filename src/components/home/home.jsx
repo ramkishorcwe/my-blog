@@ -78,7 +78,7 @@ const Home = () => {
       >
         {loading ? (
           <>
-            {Array(6)
+            {Array(8)
               .fill(0)
               .map((_, index) => (
                 <motion.div
@@ -105,7 +105,7 @@ const Home = () => {
 
 export default Home;
 
-const BlogSkeleton = () => {
+export function BlogSkeleton() {
   return (
     <div
       className="
