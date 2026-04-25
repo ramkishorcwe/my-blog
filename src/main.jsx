@@ -7,7 +7,7 @@ import { ThemeProvider } from './context/theme.jsx'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-  <ThemeProvider>
-  <AllRoutesComponent />
-  </ThemeProvider>
+    <ThemeProvider>
+      <AllRoutesComponent />
+    </ThemeProvider>
   </Provider>)

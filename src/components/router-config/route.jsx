@@ -1,29 +1,21 @@
-import { BrowserRouter, Outlet, Route, Routes, useNavigate } from "react-router-dom";
-import React, { Suspense, lazy, useEffect } from "react";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import React, { Suspense, lazy } from "react";
 import { home, createBlog, about, login, register } from "./routerpath";
 import { Spin } from "antd";
-import Project from "../project/project.jsx";
 import Header from "../header/header.jsx";
 import Footer from "../footer/footer.jsx"
-import BlogDescription from "../blog/blog-description/blog-description.jsx";
-import ProjectsListPage from '../project/projects-list.jsx'
-import ProfileComponent from "../user-profile/profile.jsx";
-const importComponentByLazyLoading = (componentName) => {
-  return React.lazy(() =>
-    import('../index.js').then((module) => ({ default: module[componentName] }))
-  )
-}
 
-const LoginComponent = importComponentByLazyLoading("Login")
-const HomeComponent = importComponentByLazyLoading("Home");
-const AboutUsComponent = importComponentByLazyLoading("AboutUs");
-const RegisterComponent = importComponentByLazyLoading("Register");
-const CreateBlogComponent = importComponentByLazyLoading("CreateBlog");
-
-// const RouteNotFoundComponent = lazy(() => import("../pages/pageNotFound"));
+const LoginComponent = lazy(() => import("../login/login"));
+const HomeComponent = lazy(() => import("../home/home"));
+const AboutUsComponent = lazy(() => import("../about-us/about-us"));
+const RegisterComponent = lazy(() => import("../register/register"));
+const CreateBlogComponent = lazy(() => import("../blog/create-blog/create-blog"));
+const ProjectsListPage = lazy(() => import("../project/projects-list"));
+const ProfileComponent = lazy(() => import('../user-profile/profile'));
+const BlogDescription = lazy(() => import('../blog/blog-description/blog-description'));
+const Project = lazy(() => import('../project/project.jsx'));
 
 const RouterConfig = () => {
-
   return (
     <Suspense fallback={renderLoader()}>
       <BrowserRouter>
