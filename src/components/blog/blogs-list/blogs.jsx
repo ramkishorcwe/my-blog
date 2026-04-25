@@ -37,9 +37,8 @@ const BlogCard = (props) => {
     };
 
     return (
-        <div key={props.$id}>
+        <div>
             {contextHolder}
-
             <div
                 className="bg-slate-800 border border-slate-700 
                    rounded-xl shadow-md 

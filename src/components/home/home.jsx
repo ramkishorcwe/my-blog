@@ -63,7 +63,6 @@ const Home = () => {
   const createProps = (blog) => {
     return {
       ...blog,
-      key: blog.title,
       fetchData,
     };
   };
