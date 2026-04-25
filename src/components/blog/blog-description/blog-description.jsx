@@ -59,7 +59,7 @@ const BlogDescription = () => {
         <img
           src={blogData?.imageUrl}
           alt="Blog"
-          className="rounded-xl w-full mb-10 max-h-[400px] object-cover"
+          className="rounded-xl w-full mb-10 max-h-100 object-cover"
         />
 
         {/* Blog Content */}

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Container from './components/utils/container';
 import { userStatus } from '../../store/auth-reducer'
 import RouterConfig from './components/router-config/route';
+import { ThemeProvider } from './context/theme';
 
 
 function App() {
@@ -29,10 +30,11 @@ function App() {
 
   return (
     <>
+    <ThemeProvider>
       <Container {...{ theme }}>
         <RouterConfig />
       </Container>
-
+    </ThemeProvider>
     </>
   )
 }

@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
-import { Flex, Image, Input, Button, Card, message } from 'antd'
-// import { UploadOutlined } from '@ant-design/icons'
+import { Flex, Image, Input, Button, Card, message, Select } from 'antd'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router'
 import envObj from '../../../environmentConfig'
 import bucket from '../../../appwrite/bucket'
 import blog from '../../../appwrite/blog'
 import Blog from '../../../appwrite/blog'
+import constant from '../../../../constent'
+import {sentenceCase} from '../../utils/utilsMethos'
 
 
 const CreateBlog = () => {
     const [uploadImageDetail, setUploadImageDetail] = useState(null)
     const [description, setDescription] = useState('')
     const [title, setTitle] = useState('')
+     const [tag, setTag] = useState([])
     const [messageApi, contextHolder] = message.useMessage()
 
     const loginUserId = useSelector((store) => store.authState)
@@ -38,6 +40,7 @@ const CreateBlog = () => {
                 imgId.current = data.featuredImage
                 setTitle(data.title)
                 setDescription(data.content)
+                setTag(data.tags)
                 setUploadImageDetail({ $id: data.featuredImage })
             }
         })()
@@ -107,7 +110,7 @@ const CreateBlog = () => {
             authorAvtar: loginUserId.userData.avtar || null,
             readingTime: Math.ceil(description.split(' ').length / 200),
             summary: description.slice(0, 150) + '...',
-            tags: ['javascript']
+            tags: [...tag]
         }
 
         try {
@@ -144,8 +147,7 @@ const CreateBlog = () => {
                         bordered={false}
                         style={{ borderRadius: 10, marginBottom: 16 }}
                     >
-                        <div style={{ marginBottom: 16 }}>
-                            <label>Featured Image</label>
+                        <div>
                             <Input
                                 type="file"
                                 onChange={uploadFile}
@@ -154,13 +156,24 @@ const CreateBlog = () => {
                         </div>
 
                         <div>
-                            <label>Title</label>
                             <Input
                                 value={title}
                                 placeholder="Enter blog title"
                                 onChange={(e) => setTitle(e.target.value)}
                                 style={{ marginTop: 6 }}
                             />
+                        </div>
+                        <div>
+                            <Select 
+                            value={tag}
+                            mode= 'multiple' 
+                            placeholder="Select Blog Category/Keyeord/Tag" 
+                            style={{ width: '100%' }} 
+                            onChange={(value) => setTag(value)}
+                            >
+                                {constant.appKeywords&&constant.appKeywords.map((tag)=>
+                                <Option key={tag} value={tag}>{sentenceCase(tag)}</Option>)}
+                          </Select>
                         </div>
                     </Card>
 

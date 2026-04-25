@@ -248,7 +248,7 @@ const BlogCard = (props) => {
     };
 
     return (
-        <>
+        <div key={props.$id}>
             {contextHolder}
 
             <div
@@ -324,7 +324,7 @@ const BlogCard = (props) => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

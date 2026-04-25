@@ -6,12 +6,16 @@ import authService from "../../appwrite/auth";
 import database from "../../appwrite/blog";
 import { userStatus } from "../../store/auth-reducer";
 import { Select } from "antd";
-const { Option } = Select;
 import { motion } from "framer-motion";
+import constant from "../../../constent";
+import { sentenceCase } from "../utils/utilsMethos";
+const { Option } = Select;
 
 const Home = () => {
   const [blogsList, setBlogsList] = useState([]);
+  const [filteredBlogsList, setFilteredBlogsList] = useState([]);
   const [loading, setLoading] = useState(true);
+    const [filterParameter, setFilterParameter] = useState('');
   const dispatch = useDispatch();
 
   const userLoginStatus = async () => {
@@ -30,6 +34,7 @@ const Home = () => {
       setLoading(true);
       const blogList = await database.listBlog();
       setBlogsList(blogList.documents);
+      setFilteredBlogsList(blogList.documents);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -39,7 +44,21 @@ const Home = () => {
   useEffect(() => {
     userLoginStatus();
     fetchData();
+    setFilterParameter("My Blogs")
   }, []);
+
+  useEffect(() => {
+    const fetchFilteredBlogs = blogsList.filter((blog) => 
+      // if (filterParameter === "My Blogs") {
+      //   return blog.authorId === authService.getUser().$id;
+      // } else if (filterParameter === "Others Blogs") {
+      //   return blog.authorId !== authService.getUser().$id;
+      // }
+      blog.tags.includes(filterParameter)
+  );
+  console.log("Filtered Blogs: ", fetchFilteredBlogs);
+  setFilteredBlogsList(fetchFilteredBlogs);
+  }, [filterParameter]);
 
   const createProps = (blog) => {
     return {
@@ -58,10 +77,13 @@ const Home = () => {
           My Blogs
         </h1>
 
-        <Select className="w-full sm:w-40" defaultValue={"My Blogs"}>
-          <Option value="My Blogs">My Blogs</Option>
-          <Option value="Others Blogs">Others Blog</Option>
-        </Select>
+        <Select className="w-full sm:w-40" defaultValue={"My Blogs"} onChange={(e)=>{
+        // console.log(e);
+        setFilterParameter(e);
+        }}>
+           {constant.appKeywords&&constant.appKeywords.map((tag)=>
+                                          <Option key={tag} value={tag}>{sentenceCase(tag)}</Option>)}
+                                    </Select>
       </div>
 
       {/* Grid */}
@@ -94,7 +116,7 @@ const Home = () => {
               ))}
           </>
         ) : (
-          blogsList.map((blog) => (
+          filteredBlogsList.map((blog) => (
             <Blog key={blog.$id} {...createProps(blog)} />
           ))
         )}
@@ -118,13 +140,10 @@ export function BlogSkeleton() {
       "
     >
       <div className="h-40 sm:h-48 bg-slate-700 rounded-lg mb-4" />
-
       <div className="h-6 bg-slate-700 rounded w-3/4 mb-3" />
-
       <div className="h-4 bg-slate-700 rounded w-full mb-2" />
       <div className="h-4 bg-slate-700 rounded w-5/6 mb-2" />
       <div className="h-4 bg-slate-700 rounded w-2/3" />
-
       <div className="h-8 bg-slate-700 rounded mt-5 w-1/3" />
     </div>
   );

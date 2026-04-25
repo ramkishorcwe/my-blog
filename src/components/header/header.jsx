@@ -1,5 +1,5 @@
 //
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import Logo from '../utils/logo';
 // import { Button } from '../index'
@@ -20,6 +20,7 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import ThemeContext  from '../../context/theme';
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -32,6 +33,7 @@ export default function Header() {
   if (!loginUserId?.userData?.$id) {
     navigate('/login')
   }
+  const{theme, toggleTheme} = useContext(ThemeContext);
 
   useEffect(() => {
     setUserLoginStatus(userStatus)
@@ -166,6 +168,10 @@ export default function Header() {
         </MenuItem>
         }
       </Menu>
+      <button onClick={toggleTheme} style={{ position: 'fixed', bottom: 20, right: 20, backgroundColor: theme === 'light' ? '#333' : '#fff', color: theme === 'light' ? '#fff' : '#333', border: 'none', borderRadius: '50%', zIndex:99 ,width: 50, height: 50, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+        {theme === 'light' ? '🌙' : '☀️'}
+      </button>
+
     </React.Fragment>
   );
 }
