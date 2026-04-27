@@ -1,4 +1,4 @@
- .container{
+/* .container{
  margin: 0px;
  padding: 0px;
   background: linear-gradient(135deg,rgb(215, 185, 247) 0%,rgb(111, 156, 235) 100%);
@@ -25,26 +25,25 @@
   width: 0;
   height: 100px;
   animation: typing 3s steps(20) 1s forwards, blink 0.99s step-end infinite;
-}
+} */
 
 /* Animation for typing effect */
-@keyframes typing {
+/* @keyframes typing {
   from {
     width: 0%;
   }
   to {
     width: 80%;
   }
-}
+} */
 /* Blinking cursor effect */
-@keyframes blink {
+/* @keyframes blink {
   50% {
     border-color: transparent;
   }
-}
+} */
 
-
-.below-container {
+/* .below-container {
 height: 350px;
 width: 800px;
 display:flex;
@@ -68,6 +67,66 @@ label{
 button {
   width: 200px;
   padding: 10px
+} */
+/* background: rgba(0,0,0,0.5); */
+/* } */
+
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
 }
-      /* background: rgba(0,0,0,0.5); */
+
+.login-card {
+  width: 900px;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.login-image-container img {
+  width: 350px;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.login-form h2 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.password-field {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 38px;
+  cursor: pointer;
+}
+
+.login-btn {
+  margin-top: 15px;
+}
+
+.extra {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.extra a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+.extra a:hover {
+  text-decoration: underline;
 }

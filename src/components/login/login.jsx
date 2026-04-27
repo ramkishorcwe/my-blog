@@ -1,87 +1,108 @@
 import { useForm } from "react-hook-form";
-import { Input } from '../index';
-import { useEffect, useState } from "react";
+import { Input } from "../index";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
-// import Container from "../utils/container";
-import { login as authLogin } from '../../store/auth-reducer'
-import authService from '../../appwrite/auth'
-import { Card, Flex, message } from "antd";
-import envConfig from '../../environmentConfig'
-import { EyeFilled, EyeInvisibleOutlined, HomeFilled } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { login as authLogin } from "../../store/auth-reducer";
+import authService from "../../appwrite/auth";
+import { Card, Flex, message, Button } from "antd";
+import { EyeFilled, EyeInvisibleOutlined } from "@ant-design/icons";
 import OAuthLogin from "./oauth-login";
-import './login.css'
+import "./login.css";
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors }, } = useForm();
-  // const userAuth = useSelector((store) => store.authState.status);
-  const [isShowPassword, setIsShowPassword] = useState(true);
+  const { register, handleSubmit } = useForm();
+  const [showPassword, setShowPassword] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    console.log(data)
-    // console.log(watch("name")) // watch input value by passing the name of it
     try {
-      const session = await authService.login(data)
+      const session = await authService.login(data);
       if (session) {
-        const userData = await authService.getUser()
-        if (userData) dispatch(authLogin({ userData: userData, status: true }));
-        // const myUrl = new URL("/", envConfig.clientBaseUrl);
-        // location.href = myUrl.href
-        navigate('/')
+        const userData = await authService.getUser();
+        if (userData) dispatch(authLogin({ userData, status: true }));
+        navigate("/");
       }
     } catch (error) {
-      messageApi.error(error.message)
-      console.log(error.message)
+      messageApi.error(error.message);
     }
-  }
-  const userLoginStatus = async () => {
-    try {
-      const user = await authService.getUser()
-      if (user) {
-        navigate('/')
-      }
-    } catch (error) {
-      messageApi.error(error.message)
-    }
-  }
+  };
+
   useEffect(() => {
-    userLoginStatus()
-    // if (userAuth === true) {
-    //   navigate('/')
-    // }
-  }, [])
+    authService.getUser().then((user) => {
+      if (user) navigate("/");
+    });
+  }, []);
 
-  return (<>
-    <Card className="container">
+  return (
+    <div className="login-wrapper">
       {contextHolder}
-      <h1 className="background-text">Welcome to Our Blog</h1>
-      <Card className="below-container" justify={"center"} gap={40}>
-        <Flex>
-          <img className="login-image" src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg" alt="..." />
 
-          <Flex vertical={true}>
+      <Card className="login-card">
+        <Flex gap={40} align="center" justify="space-between">
+          
+          {/* LEFT IMAGE */}
+          <div className="login-image-container">
+            <img
+              src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg"
+              alt="login"
+            />
+          </div>
+
+          {/* RIGHT FORM */}
+          <div className="login-form">
+            <h2>Welcome Back 👋</h2>
+            <p className="subtitle">Login to continue</p>
+
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Input {...{ type: 'text', placeholder: 'Email', label: 'Email', name: 'email', register: register }} />
-              <div>
-                <Input {...{ type: isShowPassword ? 'password' : 'text', label: 'Password', name: 'password', register: register }} />
-                {isShowPassword ? <EyeFilled style={{ position: "absolute", bottom: 198, right: 65 }} onClick={() => setIsShowPassword(!isShowPassword)} /> : <EyeInvisibleOutlined style={{ position: "absolute", bottom: 198, right: 65 }} onClick={() => setIsShowPassword(!isShowPassword)} />}
+              <Input
+                type="text"
+                placeholder="Email"
+                label="Email"
+                name="email"
+                register={register}
+              />
+
+              <div className="password-field">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  label="Password"
+                  name="password"
+                  register={register}
+                />
+                <span
+                  className="eye-icon"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeInvisibleOutlined /> : <EyeFilled />}
+                </span>
               </div>
-              {errors.exampleRequired && <span>This field is required</span>}
-              <input className="submit-button" type="submit" />
+
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+                className="login-btn"
+              >
+                Login
+              </Button>
             </form>
-            <Flex>
-              <div>if not register?-
-                <Link to={'/register'}> Register</Link>
-                <OAuthLogin />
-              </div>
-            </Flex>
-          </Flex>
+
+            <div className="extra">
+              <span>
+                Don’t have an account?{" "}
+                <Link to="/register">Register</Link>
+              </span>
+              <OAuthLogin />
+            </div>
+          </div>
+
         </Flex>
       </Card>
-    </Card>
-  </>)
-}
+    </div>
+  );
+};
+
 export default Login;
