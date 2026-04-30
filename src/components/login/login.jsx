@@ -1,19 +1,16 @@
 import { useForm } from "react-hook-form";
-import { Input } from "../index";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router";
 import { useDispatch } from "react-redux";
 import { login as authLogin } from "../../store/auth-reducer";
 import authService from "../../appwrite/auth";
-import { Card, Flex, message, Button } from "antd";
 import { EyeFilled, EyeInvisibleOutlined } from "@ant-design/icons";
 import OAuthLogin from "./oauth-login";
-import "./login.css";
+import loginImg from "../../assets/login-img.svg";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [showPassword, setShowPassword] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -26,7 +23,7 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      messageApi.error(error.message);
+      alert(error.message);
     }
   };
 
@@ -37,70 +34,98 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="login-wrapper">
-      {contextHolder}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 px-4">
 
-      <Card className="login-card">
-        <Flex gap={40} align="center" justify="space-between">
-          
-          {/* LEFT IMAGE */}
-          <div className="login-image-container">
-            <img
-              src="https://img.freepik.com/free-vector/login-concept-illustration_114360-739.jpg"
-              alt="login"
-            />
-          </div>
+      <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl flex max-w-4xl w-full overflow-hidden">
 
-          {/* RIGHT FORM */}
-          <div className="login-form">
-            <h2>Welcome Back 👋</h2>
-            <p className="subtitle">Login to continue</p>
+        {/* LEFT IMAGE */}
+        <div className="hidden md:flex items-center justify-center w-1/2 bg-slate-900/40">
+          <img
+            src={loginImg}
+            alt="login"
+            className="w-full animate-[float_4s_ease-in-out_infinite]"
+          />
+        </div>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Input
-                type="text"
-                placeholder="Email"
-                label="Email"
+        {/* RIGHT FORM */}
+        <div className="w-full md:w-1/2 p-8 text-white">
+
+          <h2 className="text-2xl font-bold mb-2">Welcome Back 👋</h2>
+          <p className="text-gray-300 mb-6">Login to continue</p>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+            {/* Email */}
+            <div className="flex w-full flex-col">
+              <label className="text-sm" htmlFor="email">
+                Email
+              </label>
+              <input
+                type="email"
                 name="email"
-                register={register}
+                id="email"
+                {...register("email")}
+                placeholder="Enter your email"
+                className="w-full mt-1 px-4 py-2 rounded-lg bg-white/10 border border-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            {/* Password */}
+            <div className="relative flex w-full flex-col">
+              <label className="text-sm" htmlFor="password">
+                Password
+              </label>
+              <input
+                type={showPassword ? "text" : "password"}
+                {...register("password")}
+                name="password"
+                id="password"
+                placeholder="Enter your password"
+                className="w-full mt-1 px-4 py-2 rounded-lg bg-white/10 border border-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
 
-              <div className="password-field">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  label="Password"
-                  name="password"
-                  register={register}
-                />
-                <span
-                  className="eye-icon"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <EyeInvisibleOutlined /> : <EyeFilled />}
-                </span>
-              </div>
-
-              <Button
-                type="primary"
-                htmlType="submit"
-                block
-                className="login-btn"
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-9 cursor-pointer text-gray-300"
               >
-                Login
-              </Button>
-            </form>
-
-            <div className="extra">
-              <span>
-                Don’t have an account?{" "}
-                <Link to="/register">Register</Link>
+                {showPassword ? <EyeInvisibleOutlined /> : <EyeFilled />}
               </span>
-              <OAuthLogin />
             </div>
+
+            {/* Button */}
+            <button
+              type="submit"
+              className="w-full py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition transform hover:scale-105"
+            >
+              Login
+            </button>
+          </form>
+
+          {/* Extra */}
+          <div className="mt-4 text-sm text-gray-300">
+            Don’t have an account?{" "}
+            <Link to="/register" className="text-indigo-400 hover:underline">
+              Register
+            </Link>
           </div>
 
-        </Flex>
-      </Card>
+          <div className="mt-4">
+            <OAuthLogin />
+          </div>
+
+        </div>
+      </div>
+
+      {/* Floating animation */}
+      <style>
+        {`
+          @keyframes float {
+            0%,100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+          }
+        `}
+      </style>
+
     </div>
   );
 };
