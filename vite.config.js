@@ -20,41 +20,77 @@ export default defineConfig({
     },
   },
 
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
+  // build: {
+  //   rollupOptions: {
+  //     output: {
+  //       manualChunks(id) {
+  //         if (id.includes('node_modules')) {
 
-            // 🔹 React core only
-            if (id.includes('node_modules/react/')) {
-              return 'react-core';
-            }
+  //           // 🔹 React core only
+  //           if (id.includes('node_modules/react/')) {
+  //             return 'react-core';
+  //           }
 
-            // 🔹 React DOM
-            if (id.includes('react-dom')) {
-              return 'react-dom';
-            }
+  //           // 🔹 React DOM
+  //           if (id.includes('react-dom')) {
+  //             return 'react-dom';
+  //           }
 
-            // 🔹 Router
-            if (id.includes('react-router')) {
-              return 'router';
-            }
+  //           // 🔹 Router
+  //           if (id.includes('react-router')) {
+  //             return 'router';
+  //           }
 
-            // 🔹 Ant Design
-            if (id.includes('antd')) {
-              return 'antd';
-            }
+  //           // 🔹 Ant Design
+  //           if (id.includes('antd')) {
+  //             return 'antd';
+  //           }
 
-            // 🔹 MUI
-            if (id.includes('@mui')) {
-              return 'mui';
-            }
+  //           // 🔹 MUI
+  //           if (id.includes('@mui')) {
+  //             return 'mui';
+  //           }
 
-            return 'vendor';
-          }
-        }
-      }
-    }
-  }
+  //           return 'vendor';
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  // vite.config.js
+
+  // build: {
+  //   rollupOptions: {
+  //     output: {
+  //       manualChunks(id) {
+  //         if (id.includes('node_modules')) {
+  //           if (id.includes('react')) return 'react-core';
+  //           if (id.includes('react-dom')) return 'react-dom';
+  //           if (id.includes('antd')) return 'antd';
+  //           if (id.includes('@mui')) return 'mui';
+  //           return 'vendor';
+  //         }
+  //       },
+  //     },
+  //   },
+  // },
+
+  // vite.config.js
+  // build: {
+  //   rollupOptions: {
+  //     output: {
+  //       manualChunks(id) {
+  //         if (!id.includes('node_modules')) return;
+
+  //         if (id.includes('/react/')) return 'react-core';
+  //         if (id.includes('/react-dom/')) return 'react-dom';
+  //         if (id.includes('react-router')) return 'router';
+
+  //         return 'vendor';
+  //       },
+  //     },
+  //   },
+  // },
+
+
 })
