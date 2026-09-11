@@ -10,6 +10,7 @@ import Blog from "../../../appwrite/blog";
 import constant from "../../../../constent";
 import { sentenceCase } from "../../utils/utilsMethos";
 import DOMPurify from "dompurify";
+import SafeImage from "../../utils/safeImage";
 
 const CreateBlog = () => {
   const [uploadImageDetail, setUploadImageDetail] = useState(null);
@@ -362,7 +363,7 @@ const CreateBlog = () => {
               bodyStyle={{ padding: 0 }}
               style={{ borderRadius: 10 }}
             >
-              <Image
+              {/* <Image
                 preview={false}
                 style={{
                   width: "100%",
@@ -374,6 +375,20 @@ const CreateBlog = () => {
                   "imageId",
                   uploadImageDetail.$id,
                 )}
+              /> */}
+              <SafeImage
+                src={envObj.bucketImageBaseUrl.replace(
+                  "imageId",
+                  uploadImageDetail.$id,
+                )}
+                alt={"Blog cover"}
+                style={{
+                  width: "100%",
+                  height: 200,
+                  objectFit: "cover",
+                  borderRadius: 10,
+                  color: "white",
+                }}
               />
             </Card>
           )}

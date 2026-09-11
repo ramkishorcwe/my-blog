@@ -7,6 +7,7 @@ import envConfig from "../../../environmentConfig";
 import "../blog.css"; // 👈 import the styles
 import "highlight.js/styles/github-dark.css";
 import hljs from "highlight.js";
+import SafeImage from "../../utils/safeImage";
 
 const BlogDescription = () => {
   const location = useLocation();
@@ -136,10 +137,15 @@ const BlogDescription = () => {
 
         {/* Featured image */}
         {blogData?.imageUrl && (
-          <img
+          // <img
+          //   src={blogData.imageUrl}
+          //   alt={blogData?.title || "Blog cover"}
+          //   className="rounded-2xl w-full mb-12 max-h-[420px] object-cover ring-1 ring-slate-800 shadow-2xl shadow-blue-500/5"
+          // />
+          <SafeImage
             src={blogData.imageUrl}
             alt={blogData?.title || "Blog cover"}
-            className="rounded-2xl w-full mb-12 max-h-[420px] object-cover ring-1 ring-slate-800 shadow-2xl shadow-blue-500/5"
+            className="rounded-2xl w-full mb-12 max-h-[420px] object-cover ring-1 ring-slate-800 shadow-2xl shadow-blue-500/5 h-320"
           />
         )}
 
