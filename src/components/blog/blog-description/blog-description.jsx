@@ -2,86 +2,171 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import blog from "../../../appwrite/blog";
 import parse from "html-react-parser";
+import DOMPurify from "dompurify";
 import envConfig from "../../../environmentConfig";
+import "../blog.css"; // 👈 import the styles
+import "highlight.js/styles/github-dark.css";
+import hljs from "highlight.js";
 
 const BlogDescription = () => {
   const location = useLocation();
   const id = location.pathname.split("/").pop();
-
   const [blogData, setBlogData] = useState();
+  const plainText = (blogData?.content || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  const readingTime = plainText
+    ? Math.max(1, Math.ceil(plainText.split(" ").length / 200))
+    : 0;
+
+  const cleanContent = blogData?.content
+    ? DOMPurify.sanitize(blogData.content, {
+        ALLOWED_TAGS: [
+          "p",
+          "h1",
+          "h2",
+          "h3",
+          "h4",
+          "h5",
+          "h6",
+          "strong",
+          "em",
+          "u",
+          "s",
+          "a",
+          "ul",
+          "ol",
+          "li",
+          "blockquote",
+          "code",
+          "pre",
+          "br",
+          "hr",
+          "img",
+          "figure",
+          "figcaption",
+          "table",
+          "thead",
+          "tbody",
+          "tr",
+          "th",
+          "td",
+        ],
+        ALLOWED_ATTR: ["href", "src", "alt", "title", "target", "rel"],
+      })
+    : "";
+
+  const formattedDate = blogData?.$createdAt
+    ? new Date(blogData.$createdAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "";
 
   useEffect(() => {
     blog.getBlog(id).then((data) => {
       const url = envConfig.bucketImageBaseUrl.replace(
         "imageId",
-        data.featuredImage
+        data.featuredImage,
       );
-
       setBlogData({ ...data, imageUrl: url });
     });
   }, [id]);
 
-  // simple reading time
-  const readingTime = blogData?.content
-    ? Math.ceil(blogData.content.split(" ").length / 200)
-    : 0;
+  useEffect(() => {
+    document.querySelectorAll(".blog-article pre").forEach((pre) => {
+      if (pre.querySelector(".copy-btn")) return;
+      const btn = document.createElement("button");
+      btn.textContent = "Copy";
+      btn.className = "copy-btn";
+      btn.onclick = () => {
+        navigator.clipboard.writeText(pre.innerText);
+        btn.textContent = "Copied!";
+        setTimeout(() => (btn.textContent = "Copy"), 1500);
+      };
+      pre.style.position = "relative";
+      pre.appendChild(btn);
+    });
+  }, [cleanContent]);
 
   return (
-    <div className="bg-slate-950 min-h-screen py-10 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-slate-950 py-12 px-4">
+      {/* subtle radial glow at top */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-[500px]"
+        style={{
+          background:
+            "radial-gradient(60% 60% at 50% 0%, rgba(59,130,246,0.15), transparent 70%)",
+        }}
+      />
 
+      <article className="relative max-w-3xl mx-auto">
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl font-bold text-white text-center mb-6">
+        <h1 className="text-3xl md:text-5xl font-extrabold text-white text-center leading-tight tracking-tight mb-6">
           {blogData?.title}
         </h1>
 
-        {/* Author + Reading time */}
-        <div className="flex items-center justify-center gap-4 mb-8 text-gray-400">
-
+        {/* Meta row */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10 text-sm text-slate-400">
           <img
-            src="https://i.pravatar.cc/40"
-            alt="author"
-            className="w-10 h-10 rounded-full"
+            src={
+              blogData?.authorAvtar ||
+              `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                blogData?.authorName || "Admin",
+              )}&background=3b82f6&color=fff`
+            }
+            alt={blogData?.authorName || "Author"}
+            className="w-9 h-9 rounded-full ring-2 ring-slate-800"
           />
-
-          <span>{blogData?.authorName || "Admin"}</span>
-
-          <span>•</span>
-
+          <span className="text-slate-300 font-medium">
+            {blogData?.authorName || "Admin"}
+          </span>
+          <span className="text-slate-600">•</span>
           <span>{readingTime} min read</span>
-
-          <span>•</span>
-
-          <span>{blogData?.$createdAt} created.</span>
+          {formattedDate && (
+            <>
+              <span className="text-slate-600">•</span>
+              <span>{formattedDate}</span>
+            </>
+          )}
         </div>
 
-        {/* Featured Image */}
-        <img
-          src={blogData?.imageUrl}
-          alt="Blog"
-          className="rounded-xl w-full mb-10 max-h-100 object-cover"
-        />
+        {/* Featured image */}
+        {blogData?.imageUrl && (
+          <img
+            src={blogData.imageUrl}
+            alt={blogData?.title || "Blog cover"}
+            className="rounded-2xl w-full mb-12 max-h-[420px] object-cover ring-1 ring-slate-800 shadow-2xl shadow-blue-500/5"
+          />
+        )}
 
-        {/* Blog Content */}
-        <div
-          className="
-          prose 
-          prose-lg 
-          prose-invert 
-          max-w-none
-          prose-headings:text-white
-          prose-p:text-gray-300
-          prose-strong:text-white
-          prose-code:bg-slate-800
-          prose-code:px-1
-          prose-code:rounded
-          text-gray-300
-        "
-        >
-          {blogData?.content && parse(blogData.content)}
+        {/* Tags */}
+        {blogData?.tags?.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-8">
+            {blogData.tags.map((t) => (
+              <span
+                key={t}
+                className="text-xs font-medium px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20"
+              >
+                #{t}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="blog-article">
+          {cleanContent && parse(cleanContent)}
         </div>
 
-      </div>
+        {/* Footer */}
+        <div className="mt-16 pt-8 border-t border-slate-800 text-center">
+          <p className="text-slate-500 text-sm">Thanks for reading ✨</p>
+        </div>
+      </article>
     </div>
   );
 };

@@ -2,6 +2,7 @@
 .body {
   margin: 0px;
   padding: 0px;
+  font-family: "Inter", system-ui, sans-serif;
 }
 .header-footer-gap {
   min-height: 65vh;
