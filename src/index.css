@@ -76,3 +76,11 @@ article {
 ::-webkit-scrollbar-thumb:hover {
   background: #334155;
 }
+
+html,
+body,
+#root {
+  background-color: #020617; /* slate-950 */
+  min-height: 100%;
+  margin: 0;
+}
