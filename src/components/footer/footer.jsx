@@ -609,14 +609,20 @@ export default function Footer() {
                 fontSize: { xs: "1.25rem", md: "1.5rem" },
               }}
             >
-              Ram Kishor
+              My Blog
             </Typography>
             <Typography
               level="body-sm"
-              sx={{ color: "#64748b", mt: 0.75, lineHeight: 1.6 }}
+              sx={{
+                color: "#64748b",
+                mt: 0.75,
+                lineHeight: 1.6,
+                width: "150%",
+              }}
             >
-              Software Developer crafting scalable, user-focused web
-              applications with modern tooling.
+              My personal blog where I share my thoughts, experiences, and
+              insights on software development, technology, and life in general.
+              Stay tuned for updates and feel free to connect with me!
             </Typography>
           </Box>
 
