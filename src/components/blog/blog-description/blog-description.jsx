@@ -136,16 +136,28 @@ const BlogDescription = () => {
         </div>
 
         {/* Featured image */}
-        {blogData?.imageUrl && (
-          // <img
-          //   src={blogData.imageUrl}
-          //   alt={blogData?.title || "Blog cover"}
-          //   className="rounded-2xl w-full mb-12 max-h-[420px] object-cover ring-1 ring-slate-800 shadow-2xl shadow-blue-500/5"
-          // />
+        {/* {blogData?.imageUrl && (
           <SafeImage
             src={blogData.imageUrl}
             alt={blogData?.title || "Blog cover"}
             className="rounded-2xl w-full mb-12 max-h-[420px] object-cover ring-1 ring-slate-800 shadow-2xl shadow-blue-500/5 h-320"
+          />
+        )} */}
+
+        {blogData?.imageUrl && (
+          <SafeImage
+            src={blogData.imageUrl}
+            alt={blogData?.title || "Blog cover"}
+            className="rounded-2xl w-full mb-12 max-h-[420px] object-cover ring-1 ring-slate-800 shadow-2xl shadow-blue-500/5 h-320"
+            style={{ maxHeight: 420, width: "100%", objectFit: "cover" }}
+            fallback={
+              <div className="w-full mb-12 h-[420px] rounded-2xl bg-slate-900 ring-1 ring-slate-800 flex items-center justify-center text-slate-500">
+                <div className="text-center">
+                  <div className="text-4xl mb-2">🖼️</div>
+                  <div className="text-sm">Image unavailable</div>
+                </div>
+              </div>
+            }
           />
         )}
 

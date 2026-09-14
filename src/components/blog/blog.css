@@ -349,3 +349,21 @@ body {
   background: rgba(148, 163, 184, 0.25);
   color: #fff;
 }
+
+.img-fallback {
+  background-image: linear-gradient(
+    135deg,
+    rgba(30, 41, 59, 0.9) 0%,
+    rgba(51, 65, 85, 0.9) 100%
+  );
+  background-size: cover;
+}
+.img-fallback::after {
+  content: "🖼️";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 32px;
+  opacity: 0.5;
+}

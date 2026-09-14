@@ -38,6 +38,10 @@ const SafeImage = ({
     );
   }
 
+  {
+    !loaded && <div className={`img-skeleton ${className}`} style={style} />;
+  }
+
   return (
     <>
       {!loaded && (
