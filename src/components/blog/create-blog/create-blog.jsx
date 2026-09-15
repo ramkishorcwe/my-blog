@@ -11,6 +11,7 @@ import constant from "../../../../constent";
 import { sentenceCase } from "../../utils/utilsMethos";
 import DOMPurify from "dompurify";
 import SafeImage from "../../utils/safeImage";
+import "../blog.css";
 
 const CreateBlog = () => {
   const [uploadImageDetail, setUploadImageDetail] = useState(null);
@@ -317,35 +318,38 @@ const CreateBlog = () => {
 
       <Flex gap={24} align="start">
         {/* LEFT PANEL */}
-        <div style={{ width: 360 }}>
+        <div className="flex flex-col gap-4 w-100 text-2xl">
           <Card
             title="Blog Details"
             bordered={false}
             style={{ borderRadius: 10, marginBottom: 16 }}
           >
-            <div>
-              <Input
-                type="file"
-                onChange={uploadFile}
-                style={{ marginTop: 6 }}
-              />
-            </div>
-
-            <div>
-              <Input
+            <div className="mb-4 my-2">
+              <input
+                type="text"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                 value={title}
                 placeholder="Enter blog title"
                 onChange={(e) => setTitle(e.target.value)}
-                style={{ marginTop: 6 }}
               />
             </div>
-            <div>
+            <div className="mb-4 my-2">
               <Select
                 value={tag}
                 mode="multiple"
                 placeholder="Select Blog Category/Keyeord/Tag"
-                style={{ width: "100%" }}
+                className="tag-dropdown w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                 onChange={(value) => setTag(value)}
+                style={{
+                  width: "100%",
+                  // height: 40,
+                  // margin: "4px 8px",
+                  border: "1px solid #d1d5db",
+                  alignItems: "center",
+                  display: "flex",
+                  alignContent: "center",
+                  justifyContent: "space-between",
+                }}
               >
                 {constant.appKeywords &&
                   constant.appKeywords.map((tag) => (
@@ -355,6 +359,17 @@ const CreateBlog = () => {
                   ))}
               </Select>
             </div>
+            <div className="mb-4 my-2">
+              <input
+                type="file"
+                onChange={uploadFile}
+                className="w-full rounded-lg border border-gray-300 bg-white text-gray-700
+                            file:mr-4 file:rounded-md file:border-0
+                            file:bg-blue-600 file:px-4 file:py-3
+                            file:text-white
+                            hover:file:bg-blue-700"
+              />
+            </div>
           </Card>
 
           {uploadImageDetail?.$id && (
@@ -363,19 +378,6 @@ const CreateBlog = () => {
               bodyStyle={{ padding: 0 }}
               style={{ borderRadius: 10 }}
             >
-              {/* <Image
-                preview={false}
-                style={{
-                  width: "100%",
-                  height: 200,
-                  objectFit: "cover",
-                  borderRadius: 10,
-                }}
-                src={envObj.bucketImageBaseUrl.replace(
-                  "imageId",
-                  uploadImageDetail.$id,
-                )}
-              /> */}
               <SafeImage
                 src={envObj.bucketImageBaseUrl.replace(
                   "imageId",

@@ -367,3 +367,16 @@ body {
   font-size: 32px;
   opacity: 0.5;
 }
+
+.tag-dropdown {
+  .ant-select-selector {
+    border: unset !important;
+  }
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  padding: 8px 12px;
+  color: #1e293b;
+  outline: none;
+}

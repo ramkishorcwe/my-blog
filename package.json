@@ -23,6 +23,7 @@
     "@reduxjs/toolkit": "^2.3.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tinymce/tinymce-react": "^6.3.0",
+    "@vercel/analytics": "^2.0.1",
     "antd": "^5.23.3",
     "appwrite": "^16.0.2",
     "class-variance-authority": "^0.7.1",
