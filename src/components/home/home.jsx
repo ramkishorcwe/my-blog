@@ -161,6 +161,7 @@ import database from "../../appwrite/blog";
 import { userStatus } from "../../store/auth-reducer";
 import constant from "../../../constent";
 import { sentenceCase } from "../utils/utilsMethos";
+import CustomDropdown from "../utils/custom-dropdown";
 
 const { Option } = Select;
 
@@ -211,6 +212,15 @@ const Home = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const updateOwnerFilter = (value) => {
+    console.log("Owner Filter changed to:", value);
+    setOwnerFilter(value);
+  };
+  const updateTagFilter = (value) => {
+    console.log("Tag Filter changed to:", value);
+    setTagFilter(value);
   };
 
   const fetchData = async () => {
@@ -288,29 +298,33 @@ const Home = () => {
 
           <div className="flex flex-wrap items-center gap-3">
             {/* Owner filter */}
-            <Select
-              value={ownerFilter}
-              onChange={setOwnerFilter}
-              className="min-w-[150px]"
-              options={[
-                { value: "all", label: "All Blogs" },
-                { value: "mine", label: "My Blogs" },
-                { value: "others", label: "Others" },
-              ]}
-            />
+            <div className="min-w-[150px] bg-amber-500/10 text-white">
+              <CustomDropdown
+                value={ownerFilter}
+                onChange={(v) => updateOwnerFilter(v.target.value)}
+                className="min-w-[150px] bg-amber-500/10 text-white"
+                options={[
+                  { value: "all", label: "All Blogs" },
+                  { value: "mine", label: "My Blogs" },
+                  { value: "others", label: "Others" },
+                ]}
+              />
+            </div>
 
             {/* Tag filter */}
-            <Select
-              allowClear
-              value={tagFilter}
-              onChange={(v) => setTagFilter(v || null)}
-              placeholder="Filter by tag"
-              className="min-w-[150px]"
-              options={(constant.appKeywords || []).map((t) => ({
-                value: t,
-                label: sentenceCase(t),
-              }))}
-            />
+            <div className="min-w-[150px] bg-amber-500/10 text-white">
+              <CustomDropdown
+                allowClear
+                value={tagFilter}
+                onChange={(v) => updateTagFilter(v.target.value || null)}
+                placeholder="Filter by tag"
+                className="min-w-[150px]"
+                options={(constant.appKeywords || []).map((t) => ({
+                  value: t,
+                  label: sentenceCase(t),
+                }))}
+              />
+            </div>
 
             {/* CTA */}
             <button
