@@ -6,7 +6,7 @@ import Container from "./components/utils/container";
 import { userStatus } from "../../store/auth-reducer";
 import RouterConfig from "./components/router-config/route";
 import { ThemeProvider } from "./context/theme";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   let authState = useSelector((state) => state.authState);
